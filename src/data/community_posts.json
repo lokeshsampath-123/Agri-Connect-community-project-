@@ -1,0 +1,52 @@
+[
+  {
+    "id": "post-1",
+    "author": "Koteswara Rao",
+    "district": "Guntur",
+    "crop_category": "Chillies",
+    "title": "Unusual curling in Teja Chilli variety",
+    "content": "My Chilli crops in Guntur are showing leaf curl symptoms. I suspect thrips infestation due to dry weather. Let me know if anyone else is facing this and what pesticide/biological control worked best.",
+    "image_url": "chilli_thrips",
+    "created_at": "2026-06-11T10:00:00Z"
+  },
+  {
+    "id": "post-2",
+    "author": "Anila Devi",
+    "district": "Nellore",
+    "crop_category": "Paddy",
+    "title": "Paddy transplantation water level query",
+    "content": "We transplanted Paddy last week in Nellore. Current water levels are about 4cm. Should I let it dry out a bit or maintain this level throughout the tillering stage? Standard advice says 2-5cm, looking for practical local experiences.",
+    "image_url": null,
+    "created_at": "2026-06-12T05:30:00Z"
+  },
+  {
+    "id": "post-3",
+    "author": "Bhaskar Reddy",
+    "district": "Kurnool",
+    "crop_category": "Onions",
+    "title": "Onion yard pricing trends this week",
+    "content": "Onion yields look decent in Kurnool this season. Mandi prices are hovering around ₹1,400 per quintal. Anyone seeing better rates in Guntur or Krishna markets?",
+    "image_url": null,
+    "created_at": "2026-06-12T08:15:00Z"
+  },
+  {
+    "id": "post-1781248365674",
+    "author": "Ramana Murthy",
+    "district": "Krishna",
+    "crop_category": "Turmeric",
+    "title": "Turmeric disease warning",
+    "content": "Spotted red patches on turmeric leaves in Krishna district. Advise organic solutions.",
+    "image_url": null,
+    "created_at": "2026-06-12T07:12:45.052Z"
+  },
+  {
+    "id": "post-1781458258929",
+    "author": "Name",
+    "district": "West Godavari",
+    "crop_category": "General",
+    "title": "regarding crop growth",
+    "content": "the crops were growing fast in these season\n",
+    "image_url": null,
+    "created_at": "2026-06-14T17:30:58.067Z"
+  }
+]
