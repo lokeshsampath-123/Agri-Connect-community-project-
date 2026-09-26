@@ -9,8 +9,8 @@ const menuItems = [
   { name: 'Dashboard', translationKey: 'dashboard', icon: 'dashboard', href: '/dashboard' },
   { name: 'AI Scanner', translationKey: 'scanner', icon: 'center_focus_strong', href: '/scanner' },
   { name: 'Pest Tracker', translationKey: 'pests', icon: 'bug_report', href: '/pests' },
-  { name: 'Market Trends', translationKey: 'market', icon: 'trending_up', href: '/market' },
   { name: 'Climate Advisory', translationKey: 'climate', icon: 'thermostat', href: '/climate' },
+  { name: 'Soil Overview', translationKey: 'soil', icon: 'landscape', href: '/soil' },
   { name: 'Community', translationKey: 'community', icon: 'forum', href: '/community' },
   { name: 'Agent Console', translationKey: 'agentConsole', icon: 'smart_toy', href: '/admin' },
   { name: 'Settings', translationKey: 'settings', icon: 'settings', href: '/settings' }
@@ -61,7 +61,7 @@ export default function Sidebar() {
     window.location.href = '/login';
   };
 
-  const activeLang = user?.language || 'en';
+  const activeLang = user?.language || (typeof window !== 'undefined' ? localStorage.getItem('agri_lang') : 'en') || 'en';
   const t = TRANSLATIONS[activeLang] || TRANSLATIONS.en;
 
   return (
@@ -74,13 +74,14 @@ export default function Sidebar() {
         />
       )}
 
-      <aside className={`w-[288px] h-screen fixed left-0 top-0 bg-white border-r border-outline-variant shadow-sm flex flex-col p-6 z-50 transition-transform duration-300 lg:translate-x-0 ${
+      <aside className={`notranslate w-[288px] h-screen fixed left-0 top-0 bg-white border-r border-outline-variant shadow-sm flex flex-col p-6 z-50 transition-transform duration-300 lg:translate-x-0 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         {/* Brand Logo & Mobile Close */}
         <div className="flex justify-center mb-8 border-b border-outline-variant/40 pb-6 relative shrink-0">
           <Link href="/" className="flex flex-col items-center group">
-            <img src="/logo.png" alt="AgriConnect Logo" className="h-24 object-contain" />
+            <img src="/logo.png" alt="FarmWise Logo" className="h-20 object-contain mb-1" />
+            <span className="text-xl font-display font-black tracking-wide animate-gradient-flow">FarmWise</span>
           </Link>
           <button 
             onClick={() => setIsOpen(false)}
@@ -96,7 +97,26 @@ export default function Sidebar() {
           {menuItems.map((item) => {
             const isActive = pathname === item.href;
             const label = t[item.translationKey] || item.name;
-            return (
+            const isRegional = activeLang !== 'en';
+            
+            return isRegional ? (
+              <a
+                key={item.name}
+                href={item.href}
+                className={`flex items-center gap-3 px-4 py-3.5 transition-all rounded-2xl font-semibold text-sm ${
+                  isActive
+                    ? 'bg-secondary-container text-on-secondary-container shadow-sm border border-secondary-container'
+                    : 'text-on-surface-variant hover:bg-surface-container hover:text-primary'
+                }`}
+              >
+                <span 
+                  className={`material-symbols-outlined text-[20px] ${isActive ? 'fill-[currentColor]' : ''}`}
+                >
+                  {item.icon}
+                </span>
+                <span>{label}</span>
+              </a>
+            ) : (
               <Link
                 key={item.name}
                 href={item.href}
@@ -164,7 +184,7 @@ export default function Sidebar() {
             <span>{t.systemStatus || 'System Status: Optimal'}</span>
           </div>
           <div className="text-[10px] text-on-surface-variant/60 font-medium px-4">
-            © 2026 AgriConnect.
+            © 2026 FarmWise.
           </div>
         </div>
       </aside>

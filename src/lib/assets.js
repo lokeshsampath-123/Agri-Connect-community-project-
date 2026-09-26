@@ -22,7 +22,7 @@ export const CROP_ASSETS = {
   groundnut: {
     id: 'groundnut',
     name: 'Groundnut',
-    url: 'https://images.unsplash.com/photo-1598970434796-0f2c4167e41b?q=80&w=400'
+    url: 'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=400'
   },
   sugarcane: {
     id: 'sugarcane',
@@ -82,16 +82,16 @@ export const CROP_ASSETS = {
 };
 
 export const PEST_ASSETS = {
-  yellow_stem_borer: 'https://images.unsplash.com/photo-1600158615171-823cc7c13dbe?q=80&w=400',
-  pink_bollworm: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=400',
-  chilli_thrips: 'https://images.unsplash.com/photo-1628352611411-0e11a1820468?q=80&w=400',
+  yellow_stem_borer: 'https://images.unsplash.com/photo-1602491453979-54a3a1aebd2c?q=80&w=400',
+  pink_bollworm: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?q=80&w=400',
+  chilli_thrips: 'https://images.unsplash.com/photo-1543949886-291771120202?q=80&w=400',
   tobacco_caterpillar: 'https://images.unsplash.com/photo-1475113548554-5a36f1f523d6?q=80&w=400',
-  whitefly: 'https://images.unsplash.com/photo-1507005990249-17c24148b294?q=80&w=400',
-  brown_plant_hopper: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?q=80&w=400',
-  early_shoot_borer: 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?q=80&w=400',
-  leaf_folder: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=400',
-  groundnut_leaf_miner: 'https://images.unsplash.com/photo-1598970434796-0f2c4167e41b?q=80&w=400',
-  red_hairy_caterpillar: 'https://images.unsplash.com/photo-1569974498991-d3c12a504f95?q=80&w=400'
+  whitefly: 'https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?q=80&w=400',
+  brown_plant_hopper: 'https://images.unsplash.com/photo-1516245834210-c4c142787335?q=80&w=400',
+  early_shoot_borer: 'https://images.unsplash.com/photo-1602491453979-54a3a1aebd2c?q=80&w=400',
+  leaf_folder: 'https://images.unsplash.com/photo-1592150621744-aca64f48394a?q=80&w=400',
+  groundnut_leaf_miner: 'https://images.unsplash.com/photo-1543949886-291771120202?q=80&w=400',
+  red_hairy_caterpillar: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?q=80&w=400'
 };
 
 /**

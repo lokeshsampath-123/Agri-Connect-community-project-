@@ -94,9 +94,22 @@ export default function Dashboard() {
   const [recentPosts, setRecentPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const navigateTo = (href) => {
+    const activeLang = localStorage.getItem('agri_lang') || 'en';
+    if (activeLang !== 'en') {
+      window.location.href = href;
+    } else {
+      router.push(href);
+    }
+  };
+
   // Live Climate state
   const [climateData, setClimateData] = useState(null);
   const [isClimateLoading, setIsClimateLoading] = useState(true);
+
+  // Live Soil state
+  const [soilData, setSoilData] = useState(null);
+  const [isSoilLoading, setIsSoilLoading] = useState(true);
 
   // Authenticate user session
   useEffect(() => {
@@ -115,6 +128,51 @@ export default function Dashboard() {
     const interval = setInterval(checkSession, 1000);
     return () => clearInterval(interval);
   }, [router]);
+
+  // Fetch dynamic Soil details
+  useEffect(() => {
+    if (!profile?.district) return;
+    let active = true;
+
+    const fetchSoil = async () => {
+      const activeMandal = profile.village || 'Tenali';
+      const cacheKey = `soil_data_v5_${profile.district}_${activeMandal}`;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        setSoilData(JSON.parse(cached));
+        setIsSoilLoading(false);
+      } else {
+        setIsSoilLoading(true);
+      }
+
+      try {
+        const res = await fetch('/api/soil', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            district: profile.district,
+            mandal: activeMandal
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (active) {
+            setSoilData(data);
+            localStorage.setItem(cacheKey, JSON.stringify(data));
+          }
+        }
+      } catch (err) {
+        console.warn('Error fetching soil data:', err);
+      } finally {
+        if (active) {
+          setIsSoilLoading(false);
+        }
+      }
+    };
+    fetchSoil();
+
+    return () => { active = false; };
+  }, [profile?.district, profile?.village]);
 
   // Fetch live climate advisory
   useEffect(() => {
@@ -169,9 +227,9 @@ export default function Dashboard() {
     );
   }
 
-  // Set active language translation Catalogs
-  const activeLang = profile.language || 'en';
-  const t = TRANSLATIONS[activeLang] || TRANSLATIONS.en;
+  // Set active language translation Catalogs (Forcing English on React side to prevent Translate conflicts)
+  const activeLang = 'en';
+  const t = TRANSLATIONS.en;
 
   // Measurement unit settings
   const areaUnit = profile.areaUnit || 'acres';
@@ -333,9 +391,18 @@ export default function Dashboard() {
                   <h4 className="font-headline font-black text-primary text-base sm:text-lg mt-1 truncate">
                     {liveAlert.title}
                   </h4>
-                  <p className="text-xs text-on-surface-variant mt-1.5 leading-relaxed font-semibold max-w-3xl">
-                    {activeAdvisory}
-                  </p>
+                  <div className="mt-2.5 space-y-1.5 max-w-3xl">
+                    {activeAdvisory.split('\n').map((point, index) => {
+                      const cleanPoint = point.replace(/^-\s*/, '').trim();
+                      if (!cleanPoint) return null;
+                      return (
+                        <div key={index} className="flex items-start gap-2 text-xs font-semibold text-on-surface-variant leading-relaxed">
+                          <span className="text-primary font-bold select-none mt-0.5">•</span>
+                          <span>{cleanPoint}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
                   {climateData?.current && (
                     <p className="text-[10px] text-on-surface-variant/80 font-black mt-2 font-label">
                       CURRENT STATE: {currentTemp}°C | {currentHumidity}% Humidity | {currentCondition}
@@ -346,91 +413,164 @@ export default function Dashboard() {
             </section>
           </ErrorBoundary>
 
-          {/* Dynamic Grid: My Crops */}
+          {/* Real-Time Soil Health Monitor */}
           <section className="space-y-4">
             <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-primary text-2xl">eco</span>
+              <span className="material-symbols-outlined text-primary text-2xl">landscape</span>
               <h3 className="font-display text-2xl font-black text-on-surface">
-                {t.cultivatedCrops || 'Cultivated Crops'}
+                {t.soilHealthMonitor || 'Real-Time Soil Health Monitor'}
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {Object.entries(profile.crops || {}).map(([cropId, acreage]) => {
-                const meta = CROP_META[cropId] || { name: cropId, icon: '🌱', baseHealth: 85, priceRange: '₹1,500 - ₹2,000' };
-                const healthScore = meta.baseHealth;
-                let healthStatus = 'Excellent';
-                let healthColor = 'text-primary bg-primary/10 border-primary/20';
+            {isSoilLoading && !soilData ? (
+              <div className="glass-card rounded-[2.5rem] p-8 border border-outline-variant/60 flex flex-col items-center justify-center space-y-3 min-h-[300px]">
+                <div className="w-10 h-10 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+                <p className="text-xs font-bold text-primary animate-pulse">Running AI Soil Analysis...</p>
+              </div>
+            ) : soilData ? (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                {/* Circular Soil Gauge & Location Card */}
+                <div className="col-span-12 lg:col-span-4 glass-card rounded-[2.5rem] p-6 border border-outline-variant/60 flex flex-col justify-between items-center text-center">
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-black text-primary uppercase tracking-widest font-label">Soil Quality Score</span>
+                    <h4 className="font-headline font-black text-on-surface text-base truncate">{soilData.soilType}</h4>
+                    <p className="text-[9px] text-on-surface-variant font-bold uppercase tracking-wider">
+                      📍 {(profile.village || 'Tenali').replace(/\s*mandal\s*/gi, '').trim().toUpperCase()} MANDAL, {profile.district}
+                    </p>
+                  </div>
 
-                if (healthScore < 75) {
-                  healthStatus = 'Warning';
-                  healthColor = 'text-error bg-error/10 border-error/20';
-                } else if (healthScore < 85) {
-                  healthStatus = 'Moderate';
-                  healthColor = 'text-secondary bg-secondary/10 border-secondary/20';
-                }
-
-                return (
-                  <div key={cropId} className="glass-card rounded-[2.5rem] p-6 border border-outline-variant/60 flex flex-col justify-between hover:shadow-lg transition-all h-full">
-                    <div>
-                      {/* Card Header */}
-                      <div className="flex justify-between items-start mb-6">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl">
-                            {meta.icon}
-                          </div>
-                          <div>
-                            <h4 className="font-headline font-bold text-primary text-base">{meta.name}</h4>
-                            <p className="text-[10px] text-on-surface-variant font-bold">
-                              {(convertArea(acreage)).toFixed(1)} {getAreaLabel()} {t.acresPlanted || 'Planted'}
-                            </p>
-                          </div>
-                        </div>
-                        <span className={`px-3 py-1 text-[9px] font-bold rounded-full border ${healthColor}`}>
-                          {healthStatus}
-                        </span>
-                      </div>
-
-                      {/* Card Stats */}
-                      <div className="grid grid-cols-2 gap-4 py-4 border-t border-b border-outline-variant/40 mb-6">
-                        <div>
-                          <p className="text-[9px] uppercase tracking-wider text-on-surface-variant font-bold">
-                            {t.healthScore || 'Health Score'}
-                          </p>
-                          <p className="text-2xl font-black text-primary mt-1">{healthScore}%</p>
-                        </div>
-                        <div>
-                          <p className="text-[9px] uppercase tracking-wider text-on-surface-variant font-bold">
-                            {t.marketPrice || 'Market Price'}
-                          </p>
-                          <p className="text-xs font-bold text-primary mt-2">{convertPriceRange(meta.priceRange)}</p>
-                          <p className="text-[8px] text-on-surface-variant">
-                            {t.perQuintal || 'per'} {getWeightLabel()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Card Actions */}
-                    <div className="flex gap-2">
-                      <button 
-                        onClick={() => router.push(`/scanner?crop=${cropId}`)}
-                        className="flex-1 py-3 bg-primary text-white rounded-xl text-xs font-bold hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-1 cursor-pointer"
-                      >
-                        <span className="material-symbols-outlined text-sm">center_focus_strong</span>
-                        {t.scanCrop || 'Scan Crop'}
-                      </button>
-                      <button 
-                        onClick={() => router.push('/pests')}
-                        className="py-3 px-4 border border-outline-variant rounded-xl text-xs font-bold hover:bg-surface-container active:scale-[0.98] transition-all flex items-center justify-center text-on-surface-variant cursor-pointer shrink-0"
-                      >
-                        {t.pestButton || 'Pests'}
-                      </button>
+                  {/* Circular SVG Gauge */}
+                  <div className="relative w-40 h-40 flex items-center justify-center my-6">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="40" stroke="rgba(var(--color-outline-variant), 0.2)" strokeWidth="8" fill="transparent" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="40" 
+                        stroke="rgb(var(--color-primary))" 
+                        strokeWidth="8" 
+                        fill="transparent" 
+                        strokeDasharray={251.2}
+                        strokeDashoffset={251.2 - (251.2 * (soilData.sqiScore || 80)) / 100}
+                        strokeLinecap="round"
+                        className="transition-all duration-1000 ease-out"
+                      />
+                    </svg>
+                    <div className="absolute flex flex-col items-center justify-center">
+                      <span className="text-3xl font-black text-primary">{soilData.sqiScore}</span>
+                      <span className="text-[9px] uppercase font-black text-on-surface-variant font-label tracking-widest mt-0.5">
+                        {soilData.sqiRating || 'OPTIMAL'}
+                      </span>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+
+                  <button 
+                    onClick={() => navigateTo('/soil')}
+                    className="w-full py-3 bg-surface-container hover:bg-primary/10 hover:text-primary transition-all text-on-surface rounded-2xl text-xs font-bold flex items-center justify-center gap-2 border border-outline-variant/20 cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined text-sm">explore</span>
+                    Detailed Soil Analysis
+                  </button>
+                </div>
+
+                {/* Macronutrients Progress Bars */}
+                <div className="col-span-12 lg:col-span-4 glass-card rounded-[2.5rem] p-6 border border-outline-variant/60 flex flex-col justify-between">
+                  <div className="flex items-center gap-2 border-b border-outline-variant/40 pb-3 mb-4">
+                    <span className="material-symbols-outlined text-primary text-lg">science</span>
+                    <h4 className="text-xs font-black text-on-surface uppercase tracking-wider">NPK & Chemistry Meter</h4>
+                  </div>
+
+                  <div className="space-y-4 flex-1 flex flex-col justify-center">
+                    {/* Nitrogen */}
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between items-center text-[10px] font-bold">
+                        <span className="text-on-surface font-black">Nitrogen (N)</span>
+                        <span className="text-primary font-black">{soilData.nitrogen} kg/ha</span>
+                      </div>
+                      <div className="h-2.5 w-full bg-surface-container rounded-full overflow-hidden border border-outline-variant/15 p-0.5">
+                        <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: `${Math.min(100, (soilData.nitrogen / 450) * 100)}%` }} />
+                      </div>
+                    </div>
+
+                    {/* Phosphorus */}
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between items-center text-[10px] font-bold">
+                        <span className="text-on-surface font-black">Phosphorus (P)</span>
+                        <span className="text-primary font-black">{soilData.phosphorus} kg/ha</span>
+                      </div>
+                      <div className="h-2.5 w-full bg-surface-container rounded-full overflow-hidden border border-outline-variant/15 p-0.5">
+                        <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: `${Math.min(100, (soilData.phosphorus / 50) * 100)}%` }} />
+                      </div>
+                    </div>
+
+                    {/* Potassium */}
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between items-center text-[10px] font-bold">
+                        <span className="text-on-surface font-black">Potassium (K)</span>
+                        <span className="text-primary font-black">{soilData.potassium} kg/ha</span>
+                      </div>
+                      <div className="h-2.5 w-full bg-surface-container rounded-full overflow-hidden border border-outline-variant/15 p-0.5">
+                        <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: `${Math.min(100, (soilData.potassium / 500) * 100)}%` }} />
+                      </div>
+                    </div>
+
+                    {/* pH and Organic Carbon */}
+                    <div className="grid grid-cols-2 gap-4 mt-2 pt-3 border-t border-outline-variant/30">
+                      <div>
+                        <span className="block text-[8px] uppercase font-bold text-on-surface-variant">Soil pH</span>
+                        <span className="text-base font-black text-primary">{soilData.ph}</span>
+                      </div>
+                      <div>
+                        <span className="block text-[8px] uppercase font-bold text-on-surface-variant">Organic Carbon</span>
+                        <span className="text-base font-black text-primary">{soilData.organicCarbon}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* AI Agronomist Advisory Block */}
+                <div className="col-span-12 lg:col-span-4 glass-card rounded-[2.5rem] p-6 border border-outline-variant/60 flex flex-col justify-between bg-primary/[0.01]">
+                  <div>
+                    <div className="flex items-center gap-2 border-b border-outline-variant/40 pb-3 mb-4">
+                      <span className="material-symbols-outlined text-primary text-lg">smart_toy</span>
+                      <h4 className="text-xs font-black text-on-surface uppercase tracking-wider">AI Soil Advisory</h4>
+                    </div>
+
+                    <div className="space-y-2.5 py-1">
+                      {(soilData.advisoryList || (soilData.advisory || '').split('\n')).filter(Boolean).map((line, lIdx) => {
+                        const match = line.match(/^(🧪\s*[^:]+:)(.*)$/);
+                        if (match) {
+                          return (
+                            <div key={lIdx} className="bg-[#f4fbf6] border border-emerald-100 p-2.5 rounded-2xl text-xs font-semibold text-emerald-950 leading-relaxed">
+                              <strong className="text-[#0f5132] font-black">{match[1]}</strong>
+                              {match[2]}
+                            </div>
+                          );
+                        }
+                        return (
+                          <div key={lIdx} className="bg-[#f4fbf6] border border-emerald-100 p-2.5 rounded-2xl text-xs font-semibold text-emerald-950 leading-relaxed">
+                            {line}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="border-t border-outline-variant/30 pt-3 mt-4">
+                    <span className="text-[9px] uppercase font-black text-secondary font-label tracking-wider block">Recommended Crops</span>
+                    <p className="text-xs font-black text-primary mt-1">
+                      {soilData.suitableCrops ? soilData.suitableCrops.join(', ') : 'Paddy, Chillies'}
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            ) : (
+              <div className="glass-card rounded-[2.5rem] p-8 border border-outline-variant/60 text-center text-xs font-semibold text-on-surface-variant">
+                Failed to load soil details. Please check your network connection.
+              </div>
+            )}
           </section>
 
           {/* Bottom Columns: Quick Tools & Community Preview */}
@@ -443,28 +583,21 @@ export default function Dashboard() {
               </h3>
               <div className="glass-card rounded-[2.5rem] p-6 border border-outline-variant/60 space-y-3">
                 <button 
-                  onClick={() => router.push('/scanner')}
+                  onClick={() => navigateTo('/scanner')}
                   className="w-full py-4 bg-surface-container hover:bg-primary/10 hover:text-primary transition-all text-on-surface rounded-2xl text-left px-5 text-xs font-bold flex items-center gap-3 border border-outline-variant/20 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-lg">center_focus_strong</span>
                   <span>{t.scanner || 'AI Scanner'}</span>
                 </button>
                 <button 
-                  onClick={() => router.push('/pests')}
+                  onClick={() => navigateTo('/pests')}
                   className="w-full py-4 bg-surface-container hover:bg-primary/10 hover:text-primary transition-all text-on-surface rounded-2xl text-left px-5 text-xs font-bold flex items-center gap-3 border border-outline-variant/20 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-lg">bug_report</span>
                   <span>{t.pests || 'Pest Tracker'}</span>
                 </button>
                 <button 
-                  onClick={() => router.push('/market')}
-                  className="w-full py-4 bg-surface-container hover:bg-primary/10 hover:text-primary transition-all text-on-surface rounded-2xl text-left px-5 text-xs font-bold flex items-center gap-3 border border-outline-variant/20 cursor-pointer"
-                >
-                  <span className="material-symbols-outlined text-lg">trending_up</span>
-                  <span>{t.market || 'Market Trends'}</span>
-                </button>
-                <button 
-                  onClick={() => router.push('/community')}
+                  onClick={() => navigateTo('/community')}
                   className="w-full py-4 bg-surface-container hover:bg-primary/10 hover:text-primary transition-all text-on-surface rounded-2xl text-left px-5 text-xs font-bold flex items-center gap-3 border border-outline-variant/20 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-lg">forum</span>
@@ -480,7 +613,7 @@ export default function Dashboard() {
                   {t.discussions || 'AP Community Discussions'}
                 </h3>
                 <button 
-                  onClick={() => router.push('/community')}
+                  onClick={() => navigateTo('/community')}
                   className="text-xs font-bold text-primary hover:underline flex items-center gap-0.5 cursor-pointer"
                 >
                   {t.viewAllForums || 'View All Forums'}
@@ -498,7 +631,7 @@ export default function Dashboard() {
                     recentPosts.map((post) => (
                       <div 
                         key={post.id}
-                        onClick={() => router.push('/community')}
+                        onClick={() => navigateTo('/community')}
                         className="bg-white p-4 rounded-2xl border border-outline-variant/60 flex justify-between items-center gap-4 hover:border-primary/40 transition-all cursor-pointer shadow-sm group"
                       >
                         <div className="min-w-0 flex-1">

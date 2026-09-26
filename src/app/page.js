@@ -144,7 +144,7 @@ export default function Home() {
     privacy: activeLang === 'te' ? 'గోప్యతా విధానం' : activeLang === 'hi' ? 'गोपनीयता नीति' : 'Privacy Policy',
     terms: activeLang === 'te' ? 'సేవా నిబంధనలు' : activeLang === 'hi' ? 'सेवा की शर्तें' : 'Terms of Service',
     contact: activeLang === 'te' ? 'మద్దతు సంప్రదించండి' : activeLang === 'hi' ? 'समर्थन से संपर्क करें' : 'Contact Support',
-    footerDesc: activeLang === 'te' ? '© 2026 అగ్రి-కనెక్ట్. వ్యవసాయంలో కృత్రిమ మేధస్సు.' : activeLang === 'hi' ? '© 2026 एग्री-कनेक्ट। कृषि में कृत्रिम बुद्धिमत्ता।' : '© 2026 AgriConnect. Artificial Intelligence in Agriculture.'
+    footerDesc: activeLang === 'te' ? '© 2026 ఫార్మ్‌వైస్. వ్యవసాయంలో కృత్రిమ మేధస్సు.' : activeLang === 'hi' ? '© 2026 फार्मवाइज़। कृषि में कृत्रिम बुद्धिमत्ता।' : '© 2026 FarmWise. Artificial Intelligence in Agriculture.'
   };
 
   return (
@@ -152,8 +152,9 @@ export default function Home() {
       {/* Top Navigation Bar */}
       <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-primary/5">
         <div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="AgriConnect Logo" className="h-14 object-contain" />
+          <div className="flex items-center gap-2.5">
+            <img src="/logo.png" alt="FarmWise Logo" className="h-12 object-contain" />
+            <span className="text-xl font-display font-black tracking-wide animate-gradient-flow">FarmWise</span>
           </div>
           
           <div className="hidden md:flex items-center gap-8 font-semibold text-sm">
@@ -425,9 +426,9 @@ export default function Home() {
       <footer className="bg-surface-container-lowest w-full border-t border-primary/10 font-body text-on-surface-variant py-12">
         <div className="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto space-y-12 md:space-y-0">
           <div className="flex flex-col md:items-start items-center gap-3">
-            <div className="flex items-center gap-3">
-              <img src="/logo.png" alt="AgriConnect Logo" className="h-10 object-contain" />
-              <span className="text-2xl font-display font-black text-primary">AgriConnect</span>
+            <div className="flex items-center gap-2.5">
+              <img src="/logo.png" alt="FarmWise Logo" className="h-10 object-contain" />
+              <span className="text-2xl font-display font-black animate-gradient-flow">FarmWise</span>
             </div>
             <p className="text-sm font-medium opacity-70">{strings.footerDesc}</p>
           </div>

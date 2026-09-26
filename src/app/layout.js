@@ -18,10 +18,10 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata = {
-  title: 'AgriConnect | Verdant Intelligence in Agriculture',
+  title: 'FarmWise | Verdant Intelligence in Agriculture',
   description: 'Bridging traditional farming wisdom with Artificial Intelligence to revolutionize Indian agriculture through real-time scanning, pest alerts, and market analytics.',
   openGraph: {
-    title: 'AgriConnect | Verdant Intelligence',
+    title: 'FarmWise | Verdant Intelligence',
     description: 'AI-native agricultural surveillance and diagnostics.',
     type: 'website',
   }

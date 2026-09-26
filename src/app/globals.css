@@ -84,6 +84,22 @@ body {
   animation: sprout-grow 8s ease-in-out infinite;
 }
 
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-flow {
+  background: linear-gradient(135deg, #006e2f 0%, #10b981 25%, #3b82f6 50%, #10b981 75%, #006e2f 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-flow 6s linear infinite;
+  display: inline-block;
+}
+
 /* Custom Cursor Styles */
 .custom-cursor {
   width: 8px;
@@ -176,4 +192,56 @@ body {
 
 .magnetic-btn:hover::after {
   transform: translate(-50%, -50%) scale(1);
+}
+
+/* Google Translate / Localized Fonts Adjustments */
+html.translated-ltr,
+html[lang="te"],
+html[lang="hi"] {
+  font-size: 92% !important; /* Scale down the root font size by 8% to fit Telugu/Hindi script naturally */
+}
+
+/* Fix overlaps by introducing taller line heights and prevent horizontal text overflows */
+html.translated-ltr *,
+html[lang="te"] *,
+html[lang="hi"] * {
+  line-height: 1.55 !important;
+  text-overflow: ellipsis;
+}
+
+/* Shrink heavy header elements that wrap badly */
+html.translated-ltr h1,
+html[lang="te"] h1,
+html[lang="hi"] h1 {
+  font-size: 2.1rem !important;
+  line-height: 1.35 !important;
+}
+
+html.translated-ltr h2,
+html[lang="te"] h2,
+html[lang="hi"] h2 {
+  font-size: 1.5rem !important;
+  line-height: 1.35 !important;
+}
+
+html.translated-ltr h3,
+html[lang="te"] h3,
+html[lang="hi"] h3 {
+  font-size: 1.15rem !important;
+  line-height: 1.35 !important;
+}
+
+html.translated-ltr h4,
+html[lang="te"] h4,
+html[lang="hi"] h4 {
+  font-size: 0.95rem !important;
+  line-height: 1.35 !important;
+}
+
+/* Keep Material Symbol fonts at their native size and override line height so they stay centered */
+.material-symbols-outlined.notranslate {
+  font-size: inherit !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
 }

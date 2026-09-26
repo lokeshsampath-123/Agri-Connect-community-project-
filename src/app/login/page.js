@@ -6,36 +6,62 @@ import Link from 'next/link';
 
 // AP Only Districts
 const AP_DISTRICTS = [
-  'Guntur',
-  'Kurnool',
-  'Krishna',
-  'Anantapur',
-  'Visakhapatnam (Vizag)',
-  'Nellore',
-  'Chittoor',
-  'Prakasam',
   'Srikakulam',
+  'Parvathipuram Manyam',
   'Vizianagaram',
-  'West Godavari',
+  'Visakhapatnam',
+  'Alluri Sitharama Raju (ASR)',
+  'Anakapalli',
+  'Kakinada',
   'East Godavari',
-  'Kadapa (YSR Kadapa)'
+  'Dr. B.R. Ambedkar Konaseema',
+  'Eluru',
+  'West Godavari',
+  'NTR',
+  'Krishna',
+  'Palnadu',
+  'Guntur',
+  'Bapatla',
+  'Prakasam',
+  'SPSR Nellore',
+  'Kurnool',
+  'Nandyal',
+  'Ananthapuramu',
+  'Sri Sathya Sai',
+  'YSR Kadapa',
+  'Annamayya',
+  'Tirupati',
+  'Chittoor'
 ];
 
 // District to Mandal Mapping (Prevents false connections)
 const AP_MANDALS = {
-  'Guntur': ['Tenali', 'Mangalagiri', 'Ponnur', 'Bapatla', 'Repalle', 'Narasaraopet', 'Amaravathi'],
-  'Kurnool': ['Adoni', 'Nandyal', 'Yemmiganur', 'Dhone', 'Banaganapalle', 'Nandikotkur'],
-  'Krishna': ['Vijayawada', 'Machilipatnam', 'Gudivada', 'Nuzvid', 'Jaggaiahpeta', 'Vuyyuru'],
-  'Anantapur': ['Dharmavaram', 'Guntakal', 'Hindupur', 'Kadiri', 'Tadipatri', 'Rayadurg'],
-  'Visakhapatnam (Vizag)': ['Gajuwaka', 'Anakapalle', 'Pendurthi', 'Bheemunipatnam', 'Araku', 'Madugula'],
-  'Nellore': ['Gudur', 'Kavali', 'Udayagiri', 'Atmakur', 'Sullurpeta', 'Naidupeta'],
-  'Chittoor': ['Tirupati', 'Madanapalle', 'Chittoor', 'Punganur', 'Sri Kalahasti', 'Kuppam'],
-  'Prakasam': ['Ongole', 'Chirala', 'Markapur', 'Kandukur', 'Kanigiri', 'Giddalur'],
-  'Srikakulam': ['Palasa', 'Tekkali', 'Ichchapuram', 'Pathapatnam', 'Sompeta'],
-  'Vizianagaram': ['Bobbili', 'Parvathipuram', 'Salur', 'Cheepurupalli', 'Srungavarapukota'],
-  'West Godavari': ['Eluru', 'Bhimavaram', 'Tadepalligudem', 'Tanuku', 'Palakollu', 'Narsapuram'],
-  'East Godavari': ['Rajamahendravaram', 'Kakinada', 'Amalapuram', 'Mandapeta', 'Peddapuram', 'Tuni'],
-  'Kadapa (YSR Kadapa)': ['Proddatur', 'Pulivendula', 'Badvel', 'Rayachoty', 'Jammalamadugu']
+  'Srikakulam': ['Palasa', 'Amadalavalasa', 'Srikakulam Rural', 'Tekkali', 'Narasannapeta', 'Ichchapuram', 'Sompeta', 'Rajam', 'Etcherla', 'Pathapatnam'],
+  'Parvathipuram Manyam': ['Parvathipuram', 'Balajipeta', 'Seethampeta', 'Makkuva', 'Komarada', 'Salur', 'Kurupam', 'Gummalaxmipuram', 'Pachipenta', 'Jiththajodu'],
+  'Vizianagaram': ['Bhogapuram', 'Chelluru', 'Vizianagaram Rural', 'Gajapathinagaram', 'Srungavarapukota', 'Nellimarla', 'Bobbili', 'Badangi', 'Pusapatirega', 'Garividi'],
+  'Visakhapatnam': ['Pendurthi', 'Anandapuram', 'Bheemunipatnam', 'Gajuwaka', 'Seethammadhara', 'Maharanipeta', 'Gopalapatnam', 'Padmanabham', 'Mulagada', 'Pedagantyada'],
+  'Alluri Sitharama Raju (ASR)': ['Araku Valley', 'Chintapalle', 'Paderu', 'Ananthagiri', 'Rampachodavaram', 'Maredumilli', 'Dumbriguda', 'G.Madugula', 'Addateegala', 'Devipatnam'],
+  'Anakapalli': ['Anakapalli', 'Atchutapuram', 'Chodavaram', 'Narsipatnam', 'Yelamanchili', 'Paravada', 'Sabbavaram', 'Kasimkota', 'Nakkapalli', 'Payakaraopeta'],
+  'Kakinada': ['Kakinada Rural', 'Samalkota', 'Peddapuram', 'Pithapuram', 'Tuni', 'Prathipadu', 'Gollaprolu', 'Jaggampeta', 'Karapa', 'Thallarevu'],
+  'East Godavari': ['Rajahmundry Rural', 'Ravulapalem', 'Kovvur', 'Nidadavole', 'Anaparthi', 'Gopalapuram', 'Devarapalle', 'Korukonda', 'Chagallu', 'Kadiam'],
+  'Dr. B.R. Ambedkar Konaseema': ['Amalapuram', 'Razole', 'Kothapeta', 'Mandapeta', 'Mummidivaram', 'P.Gannavaram', 'Rayavaram', 'Malikipuram', 'Ambajipeta', 'Kapileswarapuram'],
+  'Eluru': ['Eluru Rural', 'Jangareddygudem', 'Chintalapudi', 'Tadepalligudem', 'Denduluru', 'Nuzvid', 'Bhimadole', 'Chatrai', 'Pedapadu', 'Kukunoor'],
+  'West Godavari': ['Bhimavaram', 'Tanuku', 'Palakollu', 'Narasapuram', 'Achanta', 'Penugonda', 'Penumantra', 'Undi', 'Iragavaram', 'Mogalthur'],
+  'NTR': ['Vijayawada Rural', 'Jaggayyapeta', 'Ibrahimpatnam', 'Kanchikacherla', 'Nandigama', 'Mylavaram', 'Tiruvuru', 'G.Konduru', 'Vatsavai', 'Penuganchiprolu'],
+  'Krishna': ['Gudivada', 'Machilipatnam', 'Vuyyuru', 'Pamarru', 'Challapalli', 'Avanigadda', 'Gannavaram', 'Penamaluru', 'Bantumilli', 'Krittivennu'],
+  'Palnadu': ['Narasaraopet', 'Macherla', 'Piduguralla', 'Chilakaluripet', 'Sattenapalle', 'Gurazala', 'Vinukonda', 'Dachepalle', 'Krosuru', 'Bellamkonda'],
+  'Guntur': ['Guntur Rural', 'Tenali', 'Duggirala', 'Tadikonda', 'Medikonduru', 'Chebrolu', 'Mangalagiri', 'Ponnur', 'Pedakakani', 'Prathipadu'],
+  'Bapatla': ['Chirala', 'Bapatla', 'Parchur', 'Addanki', 'Repalle', 'Vemuru', 'Martur', 'Korisapadu', 'Karlapalem', 'Nizampatnam'],
+  'Prakasam': ['Ongole', 'Kandukur', 'Podili', 'Kanigiri', 'Markapuram', 'Singarayakonda', 'Chimakurthi', 'Giddalur', 'Yerragondapalem', 'Donakonda'],
+  'SPSR Nellore': ['Nellore Rural', 'Kavali', 'Gudur', 'Atmakur', 'Venkatagiri', 'Naidupeta', 'Buchireddypalem', 'Kovur', 'Udayagiri', 'Podalakur'],
+  'Kurnool': ['Adoni', 'Kurnool Rural', 'Yemmiganur', 'Kodumur', 'Pathikonda', 'Alur', 'Mantralayam', 'Goneganandla', 'Nandavaram', 'Orvakal'],
+  'Nandyal': ['Nandyal', 'Dhone', 'Allagadda', 'Banaganapalle', 'Koilkuntla', 'Atmakur', 'Srisailam', 'Owk', 'Nandikotkur', 'Bethamcherla'],
+  'Ananthapuramu': ['Tadipatri', 'Anantapuramu Rural', 'Kalyandurg', 'Guntakal', 'Gooty', 'Uravakonda', 'Rayadurg', 'Pamidi', 'Singanamala', 'Raptadu'],
+  'Sri Sathya Sai': ['Puttaparthi', 'Hindupur', 'Kadiri', 'Dharmavaram', 'Madakasira', 'Penukonda', 'Gorantla', 'Somandepalle', 'Bukkapatnam', 'Tanakal'],
+  'YSR Kadapa': ['Pulivendula', 'Kadapa Rural', 'Jammalamadugu', 'Proddatur', 'Badvel', 'Mydukur', 'Kamalapuram', 'Vempalli', 'Yerraguntla', 'Pendlimarri'],
+  'Annamayya': ['Madanapalle', 'Rajampet', 'Rayachoti', 'Piler', 'Railway Koduru', 'Punganur', 'Chowdepalle', 'Lakkireddipalli', 'Tamballapalle', 'Chinnamandem'],
+  'Tirupati': ['Srikalahasti', 'Chandragiri', 'Tirupati Rural', 'Venkatagiri-border', 'Sullurpeta', 'Naidupeta-fringe', 'Tada', 'Satyavedu', 'Puttur', 'Narayanavanam'],
+  'Chittoor': ['Chittoor Rural', 'Palamaner', 'Kuppam', 'Nagari', 'GD Nellore', 'Bangarupalem', 'Santhipuram', 'Gudupalle', 'Karvetinagar', 'Vedurukuppam']
 };
 
 // Expanded Crops List
@@ -64,13 +90,8 @@ const AP_CROPS = [
   { id: 'ginger', name: 'Ginger', icon: '🫚' }
 ];
 
-// Predefined Farmer Avatars
-const DEFAULT_AVATARS = [
-  'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&q=80&w=150', // Avatar 1
-  'https://images.unsplash.com/photo-1592949873599-8ab2ccd5844a?auto=format&fit=crop&q=80&w=150', // Avatar 2
-  'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=150', // Avatar 3
-  'https://images.unsplash.com/photo-1589923188900-85dae4409f7c?auto=format&fit=crop&q=80&w=150'  // Avatar 4
-];
+// Default Farmer Profile Silhouette
+const DEFAULT_AVATAR = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23a0a0a0"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6.1 0-8 4-8 4v2h16v-2s-1.9-4-8-4z"/></svg>`;
 
 export default function Login() {
   const router = useRouter();
@@ -94,7 +115,7 @@ export default function Login() {
   const [village, setVillage] = useState('Tenali');
   const [selectedCrops, setSelectedCrops] = useState([]);
   const [cropAcreage, setCropAcreage] = useState({});
-  const [profileImage, setProfileImage] = useState(DEFAULT_AVATARS[0]);
+  const [profileImage, setProfileImage] = useState(DEFAULT_AVATAR);
 
   // Security Validation States
   const [nameError, setNameError] = useState('');
@@ -151,16 +172,26 @@ export default function Login() {
       setNameError('');
     }
 
-    // Email Validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Email/Username Validation
     if (!email.trim()) {
-      setEmailError('Email is required');
+      setEmailError('Email or Username is required');
       isValid = false;
-    } else if (!emailRegex.test(email)) {
-      setEmailError('Please enter a valid email address');
-      isValid = false;
+    } else if (email.includes('@')) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.trim())) {
+        setEmailError('Please enter a valid email address');
+        isValid = false;
+      } else {
+        setEmailError('');
+      }
     } else {
-      setEmailError('');
+      const usernameRegex = /^[a-zA-Z0-9_]{3,}$/;
+      if (!usernameRegex.test(email.trim())) {
+        setEmailError('Username must be at least 3 characters (letters, numbers, or underscores)');
+        isValid = false;
+      } else {
+        setEmailError('');
+      }
     }
 
     // Password Validation (Complexity check: min 6 chars, 1 number, 1 special char)
@@ -193,38 +224,57 @@ export default function Login() {
 
     if (savedUserJson) {
       const savedUser = JSON.parse(savedUserJson);
-      if (savedUser.email === email && savedUser.password === password) {
+      const input = email.trim().toLowerCase();
+      const userEmail = savedUser.email.toLowerCase();
+      const userName = savedUser.name.toLowerCase().replace(/\s+/g, '_');
+      const emailPrefix = savedUser.email.split('@')[0].toLowerCase();
+
+      const isMatch = userEmail === input || userName === input || savedUser.name.toLowerCase() === input || emailPrefix === input;
+
+      if (isMatch && savedUser.password === password) {
         userToLog = savedUser;
       }
     }
 
     if (!userToLog) {
       // Create a default demo account if none exists
-      if (email === 'farmer@agriconnect.com' && password === 'Farmer@123') {
+      const input = email.trim().toLowerCase();
+      if ((input === 'farmer' || input === 'farmer@agriconnect.com') && password === 'Farmer@123') {
         userToLog = {
           name: 'Ramesh Babu',
-          email: email,
+          email: 'farmer@agriconnect.com',
           district: 'Guntur',
           village: 'Tenali',
-          crops: { paddy: 5.0, chillies: 3.0 },
-          profileImage: DEFAULT_AVATARS[0],
+          crops: {},
+          profileImage: DEFAULT_AVATAR,
           areaUnit: 'acres',
           weightUnit: 'quintal',
           language: 'en'
         };
         localStorage.setItem('registered_user', JSON.stringify({ ...userToLog, password }));
       } else {
-        setLoginError('Invalid email credentials or password. Please use farmer@agriconnect.com / Farmer@123 for testing.');
+        setLoginError('Invalid credentials. Please use farmer / Farmer@123 for testing.');
         return;
       }
     }
 
+    const lang = userToLog.language || 'en';
+    localStorage.setItem('agri_lang', lang);
     localStorage.setItem('user_profile', JSON.stringify(userToLog));
-    router.push('/dashboard');
+
+    // Set Google Translate cookie
+    let googtransVal = '';
+    if (lang === 'te') googtransVal = '/en/te';
+    else if (lang === 'hi') googtransVal = '/en/hi';
+
+    document.cookie = `googtrans=${googtransVal}; path=/;`;
+    document.cookie = `googtrans=${googtransVal}; path=/; domain=${window.location.hostname};`;
+
+    window.location.href = '/dashboard';
   };
 
   // Registration next step
-  const handleNextStep = () => {
+  const handleNextStep = (e) => {
     if (step === 1) {
       if (validateStep1()) {
         setStep(2);
@@ -234,20 +284,7 @@ export default function Login() {
         alert('Please specify your Mandal / area');
         return;
       }
-      setStep(3);
-    } else if (step === 3) {
-      if (selectedCrops.length === 0) {
-        alert('Please select at least one crop');
-        return;
-      }
-      const updatedAcreage = { ...cropAcreage };
-      selectedCrops.forEach(cropId => {
-        if (!updatedAcreage[cropId]) {
-          updatedAcreage[cropId] = 1.0;
-        }
-      });
-      setCropAcreage(updatedAcreage);
-      setStep(4);
+      handleRegisterSubmit(e);
     }
   };
 
@@ -272,7 +309,7 @@ export default function Login() {
 
   // Complete Registration
   const handleRegisterSubmit = (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
 
     const userProfile = {
       name,
@@ -283,15 +320,23 @@ export default function Login() {
       areaUnit: 'acres',
       weightUnit: 'quintal',
       language: activeLang,
-      crops: selectedCrops.reduce((acc, cropId) => {
-        acc[cropId] = cropAcreage[cropId] || 1.0;
-        return acc;
-      }, {})
+      crops: {} // Crops removed from profile onboarding
     };
+
+    localStorage.setItem('agri_lang', activeLang);
+
+    // Set Google Translate cookie
+    let googtransVal = '';
+    if (activeLang === 'te') googtransVal = '/en/te';
+    else if (activeLang === 'hi') googtransVal = '/en/hi';
+
+    document.cookie = `googtrans=${googtransVal}; path=/;`;
+    document.cookie = `googtrans=${googtransVal}; path=/; domain=${window.location.hostname};`;
 
     localStorage.setItem('registered_user', JSON.stringify({ ...userProfile, password }));
     localStorage.setItem('user_profile', JSON.stringify(userProfile));
-    router.push('/dashboard');
+    
+    window.location.href = '/dashboard';
   };
 
   return (
@@ -306,8 +351,9 @@ export default function Login() {
         
         {/* Brand Header */}
         <div className="text-center mb-8 bg-white/40 p-4 rounded-3xl border border-outline-variant/35 backdrop-blur-sm">
-          <img src="/logo.png" alt="AgriConnect Logo" className="h-24 object-contain mx-auto" />
-          <p className="text-xs text-on-surface-variant font-black mt-2 uppercase tracking-widest font-label">
+          <img src="/logo.png" alt="FarmWise Logo" className="h-20 object-contain mx-auto mb-1" />
+          <span className="text-2xl font-display font-black tracking-wide animate-gradient-flow block">FarmWise</span>
+          <p className="text-xs text-on-surface-variant font-black mt-1 uppercase tracking-widest font-label">
             Verdant Onboarding Portal
           </p>
         </div>
@@ -328,11 +374,11 @@ export default function Login() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-wider mb-2">Email Address</label>
+                <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-wider mb-2">Username or Email Address</label>
                 <input 
-                  type="email"
+                  type="text"
                   className="w-full bg-white border border-outline-variant rounded-2xl py-3.5 px-4 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all text-sm font-semibold"
-                  placeholder="name@farm.com"
+                  placeholder="e.g. user_123 or name@farm.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -360,7 +406,7 @@ export default function Login() {
             </button>
 
             <div className="text-center text-xs font-semibold text-on-surface-variant pt-2 border-t border-outline-variant/40">
-              New to AgriConnect?{' '}
+              New to FarmWise?{' '}
               <button 
                 type="button" 
                 onClick={() => { setIsLoginMode(false); setStep(1); }} 
@@ -412,13 +458,13 @@ export default function Login() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-wider mb-2">Email Address</label>
+                    <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-wider mb-2">Username or Email Address</label>
                     <input 
-                      type="email"
+                      type="text"
                       className={`w-full bg-white border rounded-2xl py-3.5 px-4 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all text-sm font-semibold ${
                         emailError ? 'border-error' : 'border-outline-variant'
                       }`}
-                      placeholder="name@farm.com"
+                      placeholder="e.g. user_123 or name@farm.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -484,16 +530,17 @@ export default function Login() {
                   </div>
                 </div>
 
-                {/* Profile Image upload / avatar picker section */}
+                {/* Profile Image upload section */}
                 <div className="border-t border-outline-variant/40 pt-4 space-y-3">
-                  <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-wider">Choose Profile Avatar</label>
+                  <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-wider">Profile Picture</label>
                   
                   <div className="flex flex-col sm:flex-row gap-5 items-center">
                     <div className="relative shrink-0 group">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img 
                         src={profileImage} 
-                        alt="Current Avatar" 
-                        className="w-16 h-16 rounded-2xl object-cover border-2 border-primary shadow-sm"
+                        alt="Profile Avatar" 
+                        className="w-16 h-16 rounded-2xl object-cover border-2 border-primary shadow-sm bg-surface-container"
                       />
                       <label className="absolute inset-0 bg-black/40 text-white text-[9px] font-bold rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
                         Upload
@@ -506,23 +553,18 @@ export default function Login() {
                       </label>
                     </div>
 
-                    <div className="space-y-2">
-                      <div className="flex gap-2">
-                        {DEFAULT_AVATARS.map((av, idx) => (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => setProfileImage(av)}
-                            className={`w-10 h-10 rounded-xl overflow-hidden border-2 transition-all ${
-                              profileImage === av ? 'border-primary scale-105' : 'border-outline-variant hover:scale-102'
-                            }`}
-                          >
-                            <img src={av} alt={`Avatar ${idx+1}`} className="w-full h-full object-cover" />
-                          </button>
-                        ))}
-                      </div>
+                    <div className="space-y-1.5 text-center sm:text-left">
+                      <label className="inline-block bg-primary/10 text-primary border border-primary/20 hover:bg-primary/15 transition-colors text-[11px] font-bold px-3.5 py-2 rounded-xl cursor-pointer">
+                        Upload Custom Photo
+                        <input 
+                          type="file" 
+                          accept="image/*" 
+                          className="hidden" 
+                          onChange={handleImageUpload}
+                        />
+                      </label>
                       <p className="text-[9px] text-on-surface-variant font-medium">
-                        Click on an avatar to select it, or hover/click the profile frame to upload a custom image.
+                        Upload your custom profile photo (up to 2MB). If no photo is uploaded, the default profile silhouette will be used.
                       </p>
                     </div>
                   </div>
@@ -530,81 +572,8 @@ export default function Login() {
               </div>
             )}
 
-            {/* STEP 3: Crop Selection */}
-            {step === 3 && (
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-display text-xl font-black text-primary">Step 3: Select Crops Grown</h4>
-                  <p className="text-xs text-on-surface-variant mt-1 font-medium">Select which crops are currently cultivated in your farms.</p>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-64 overflow-y-auto pr-1 custom-scrollbar">
-                  {AP_CROPS.map(crop => {
-                    const isSelected = selectedCrops.includes(crop.id);
-                    return (
-                      <div 
-                        key={crop.id}
-                        onClick={() => handleToggleCrop(crop.id)}
-                        className={`p-3 rounded-2xl border cursor-pointer flex items-center gap-2.5 transition-all select-none hover:shadow-xs ${
-                          isSelected 
-                            ? 'bg-primary/10 border-primary text-primary font-bold shadow-xs'
-                            : 'bg-white border-outline-variant hover:bg-surface-container'
-                        }`}
-                      >
-                        <span className="text-xl shrink-0">{crop.icon}</span>
-                        <span className="text-xs truncate leading-normal">{crop.name}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* STEP 4: Define Acreage */}
-            {step === 4 && (
-              <form onSubmit={handleRegisterSubmit} className="space-y-4">
-                <div>
-                  <h4 className="font-display text-xl font-black text-primary">Step 4: Cultivation Acreage</h4>
-                  <p className="text-xs text-on-surface-variant mt-1 font-medium">Specify the acreage cultivated for each crop.</p>
-                </div>
-
-                <div className="space-y-3 max-h-64 overflow-y-auto pr-1 custom-scrollbar">
-                  {selectedCrops.map(cropId => {
-                    const crop = AP_CROPS.find(c => c.id === cropId);
-                    return (
-                      <div key={cropId} className="flex items-center justify-between p-3 bg-surface-container rounded-2xl border border-outline-variant/40">
-                        <div className="flex items-center gap-2.5 min-w-0">
-                          <span className="text-xl shrink-0">{crop?.icon}</span>
-                          <span className="text-xs font-bold text-primary truncate">{crop?.name}</span>
-                        </div>
-                        <div className="flex items-center gap-2 shrink-0">
-                          <input 
-                            type="number"
-                            step="0.1"
-                            min="0.1"
-                            className="w-20 bg-white border border-outline-variant rounded-lg p-1.5 text-center text-xs font-bold"
-                            value={cropAcreage[cropId] || ''}
-                            onChange={(e) => handleAcreageChange(cropId, e.target.value)}
-                            required
-                          />
-                          <span className="text-[10px] font-bold text-on-surface-variant uppercase">Acres</span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <button 
-                  type="submit"
-                  className="w-full py-4 bg-primary text-white rounded-2xl font-black text-sm hover:shadow-xl hover:shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all mt-4"
-                >
-                  Complete Onboarding
-                </button>
-              </form>
-            )}
-
             {/* Stepper Navigation Buttons */}
-            {step < 4 && (
+            {step < 3 && (
               <div className="flex justify-between items-center pt-4 border-t border-outline-variant/30">
                 <button 
                   type="button" 
@@ -619,7 +588,7 @@ export default function Login() {
                   onClick={handleNextStep}
                   className="px-6 py-3 bg-primary text-white rounded-xl text-xs font-bold hover:shadow-lg hover:shadow-primary/10 active:scale-95 transition-all"
                 >
-                  Continue
+                  {step === 2 ? 'Complete Onboarding' : 'Continue'}
                 </button>
               </div>
             )}

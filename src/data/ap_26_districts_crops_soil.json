@@ -1,0 +1,912 @@
+[
+  {
+    "District": "Srikakulam",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Red sandy loam; red clayey; coastal/alluvial",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Srikakulam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Srikakulam",
+    "Crop_Rank": 2,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red sandy loam; red clayey; coastal/alluvial",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Srikakulam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Srikakulam",
+    "Crop_Rank": 3,
+    "Crop": "Maize",
+    "District_Soil_Types": "Red sandy loam; red clayey; coastal/alluvial",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for Srikakulam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Srikakulam",
+    "Crop_Rank": 4,
+    "Crop": "Blackgram",
+    "District_Soil_Types": "Red sandy loam; red clayey; coastal/alluvial",
+    "Use_for_AI": "Blackgram is a major/commonly suitable crop candidate for Srikakulam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Srikakulam",
+    "Crop_Rank": 5,
+    "Crop": "Cashew",
+    "District_Soil_Types": "Red sandy loam; red clayey; coastal/alluvial",
+    "Use_for_AI": "Cashew is a major/commonly suitable crop candidate for Srikakulam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Parvathipuram Manyam",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Red loamy; red sandy loam; lateritic",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Parvathipuram Manyam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Parvathipuram Manyam",
+    "Crop_Rank": 2,
+    "Crop": "Ragi",
+    "District_Soil_Types": "Red loamy; red sandy loam; lateritic",
+    "Use_for_AI": "Ragi is a major/commonly suitable crop candidate for Parvathipuram Manyam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Parvathipuram Manyam",
+    "Crop_Rank": 3,
+    "Crop": "Maize",
+    "District_Soil_Types": "Red loamy; red sandy loam; lateritic",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for Parvathipuram Manyam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Parvathipuram Manyam",
+    "Crop_Rank": 4,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red loamy; red sandy loam; lateritic",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Parvathipuram Manyam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Parvathipuram Manyam",
+    "Crop_Rank": 5,
+    "Crop": "Turmeric",
+    "District_Soil_Types": "Red loamy; red sandy loam; lateritic",
+    "Use_for_AI": "Turmeric is a major/commonly suitable crop candidate for Parvathipuram Manyam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Vizianagaram",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Red sandy loam; red clayey; alluvial",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Vizianagaram at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Vizianagaram",
+    "Crop_Rank": 2,
+    "Crop": "Ragi",
+    "District_Soil_Types": "Red sandy loam; red clayey; alluvial",
+    "Use_for_AI": "Ragi is a major/commonly suitable crop candidate for Vizianagaram at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Vizianagaram",
+    "Crop_Rank": 3,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red sandy loam; red clayey; alluvial",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Vizianagaram at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Vizianagaram",
+    "Crop_Rank": 4,
+    "Crop": "Maize",
+    "District_Soil_Types": "Red sandy loam; red clayey; alluvial",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for Vizianagaram at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Vizianagaram",
+    "Crop_Rank": 5,
+    "Crop": "Sugarcane",
+    "District_Soil_Types": "Red sandy loam; red clayey; alluvial",
+    "Use_for_AI": "Sugarcane is a major/commonly suitable crop candidate for Vizianagaram at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Visakhapatnam",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Red loamy/clayey; lateritic; coastal/alluvial",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Visakhapatnam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Visakhapatnam",
+    "Crop_Rank": 2,
+    "Crop": "Sugarcane",
+    "District_Soil_Types": "Red loamy/clayey; lateritic; coastal/alluvial",
+    "Use_for_AI": "Sugarcane is a major/commonly suitable crop candidate for Visakhapatnam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Visakhapatnam",
+    "Crop_Rank": 3,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red loamy/clayey; lateritic; coastal/alluvial",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Visakhapatnam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Visakhapatnam",
+    "Crop_Rank": 4,
+    "Crop": "Cashew",
+    "District_Soil_Types": "Red loamy/clayey; lateritic; coastal/alluvial",
+    "Use_for_AI": "Cashew is a major/commonly suitable crop candidate for Visakhapatnam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Visakhapatnam",
+    "Crop_Rank": 5,
+    "Crop": "Vegetables",
+    "District_Soil_Types": "Red loamy/clayey; lateritic; coastal/alluvial",
+    "Use_for_AI": "Vegetables is a major/commonly suitable crop candidate for Visakhapatnam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Alluri Sitharama Raju (ASR)",
+    "Crop_Rank": 1,
+    "Crop": "Coffee",
+    "District_Soil_Types": "Red loamy; lateritic; hill/forest soils",
+    "Use_for_AI": "Coffee is a major/commonly suitable crop candidate for Alluri Sitharama Raju (ASR) at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Alluri Sitharama Raju (ASR)",
+    "Crop_Rank": 2,
+    "Crop": "Pepper",
+    "District_Soil_Types": "Red loamy; lateritic; hill/forest soils",
+    "Use_for_AI": "Pepper is a major/commonly suitable crop candidate for Alluri Sitharama Raju (ASR) at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Alluri Sitharama Raju (ASR)",
+    "Crop_Rank": 3,
+    "Crop": "Turmeric",
+    "District_Soil_Types": "Red loamy; lateritic; hill/forest soils",
+    "Use_for_AI": "Turmeric is a major/commonly suitable crop candidate for Alluri Sitharama Raju (ASR) at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Alluri Sitharama Raju (ASR)",
+    "Crop_Rank": 4,
+    "Crop": "Maize",
+    "District_Soil_Types": "Red loamy; lateritic; hill/forest soils",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for Alluri Sitharama Raju (ASR) at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Alluri Sitharama Raju (ASR)",
+    "Crop_Rank": 5,
+    "Crop": "Ragi",
+    "District_Soil_Types": "Red loamy; lateritic; hill/forest soils",
+    "Use_for_AI": "Ragi is a major/commonly suitable crop candidate for Alluri Sitharama Raju (ASR) at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Anakapalli",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Red loamy; red clayey; alluvial",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Anakapalli at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Anakapalli",
+    "Crop_Rank": 2,
+    "Crop": "Sugarcane",
+    "District_Soil_Types": "Red loamy; red clayey; alluvial",
+    "Use_for_AI": "Sugarcane is a major/commonly suitable crop candidate for Anakapalli at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Anakapalli",
+    "Crop_Rank": 3,
+    "Crop": "Maize",
+    "District_Soil_Types": "Red loamy; red clayey; alluvial",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for Anakapalli at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Anakapalli",
+    "Crop_Rank": 4,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red loamy; red clayey; alluvial",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Anakapalli at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Anakapalli",
+    "Crop_Rank": 5,
+    "Crop": "Blackgram",
+    "District_Soil_Types": "Red loamy; red clayey; alluvial",
+    "Use_for_AI": "Blackgram is a major/commonly suitable crop candidate for Anakapalli at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Kakinada",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Deltaic alluvium; coastal/alluvial; clay loam",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Kakinada at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Kakinada",
+    "Crop_Rank": 2,
+    "Crop": "Coconut",
+    "District_Soil_Types": "Deltaic alluvium; coastal/alluvial; clay loam",
+    "Use_for_AI": "Coconut is a major/commonly suitable crop candidate for Kakinada at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Kakinada",
+    "Crop_Rank": 3,
+    "Crop": "Sugarcane",
+    "District_Soil_Types": "Deltaic alluvium; coastal/alluvial; clay loam",
+    "Use_for_AI": "Sugarcane is a major/commonly suitable crop candidate for Kakinada at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Kakinada",
+    "Crop_Rank": 4,
+    "Crop": "Blackgram",
+    "District_Soil_Types": "Deltaic alluvium; coastal/alluvial; clay loam",
+    "Use_for_AI": "Blackgram is a major/commonly suitable crop candidate for Kakinada at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Kakinada",
+    "Crop_Rank": 5,
+    "Crop": "Banana",
+    "District_Soil_Types": "Deltaic alluvium; coastal/alluvial; clay loam",
+    "Use_for_AI": "Banana is a major/commonly suitable crop candidate for Kakinada at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "East Godavari",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Deltaic alluvium; red clayey; coastal/alluvial",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for East Godavari at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "East Godavari",
+    "Crop_Rank": 2,
+    "Crop": "Coconut",
+    "District_Soil_Types": "Deltaic alluvium; red clayey; coastal/alluvial",
+    "Use_for_AI": "Coconut is a major/commonly suitable crop candidate for East Godavari at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "East Godavari",
+    "Crop_Rank": 3,
+    "Crop": "Banana",
+    "District_Soil_Types": "Deltaic alluvium; red clayey; coastal/alluvial",
+    "Use_for_AI": "Banana is a major/commonly suitable crop candidate for East Godavari at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "East Godavari",
+    "Crop_Rank": 4,
+    "Crop": "Blackgram",
+    "District_Soil_Types": "Deltaic alluvium; red clayey; coastal/alluvial",
+    "Use_for_AI": "Blackgram is a major/commonly suitable crop candidate for East Godavari at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "East Godavari",
+    "Crop_Rank": 5,
+    "Crop": "Maize",
+    "District_Soil_Types": "Deltaic alluvium; red clayey; coastal/alluvial",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for East Godavari at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Dr. B.R. Ambedkar Konaseema",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Deltaic alluvium; coastal/alluvial; clay loam",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Dr. B.R. Ambedkar Konaseema at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Dr. B.R. Ambedkar Konaseema",
+    "Crop_Rank": 2,
+    "Crop": "Coconut",
+    "District_Soil_Types": "Deltaic alluvium; coastal/alluvial; clay loam",
+    "Use_for_AI": "Coconut is a major/commonly suitable crop candidate for Dr. B.R. Ambedkar Konaseema at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Dr. B.R. Ambedkar Konaseema",
+    "Crop_Rank": 3,
+    "Crop": "Banana",
+    "District_Soil_Types": "Deltaic alluvium; coastal/alluvial; clay loam",
+    "Use_for_AI": "Banana is a major/commonly suitable crop candidate for Dr. B.R. Ambedkar Konaseema at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Dr. B.R. Ambedkar Konaseema",
+    "Crop_Rank": 4,
+    "Crop": "Blackgram",
+    "District_Soil_Types": "Deltaic alluvium; coastal/alluvial; clay loam",
+    "Use_for_AI": "Blackgram is a major/commonly suitable crop candidate for Dr. B.R. Ambedkar Konaseema at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Dr. B.R. Ambedkar Konaseema",
+    "Crop_Rank": 5,
+    "Crop": "Sugarcane",
+    "District_Soil_Types": "Deltaic alluvium; coastal/alluvial; clay loam",
+    "Use_for_AI": "Sugarcane is a major/commonly suitable crop candidate for Dr. B.R. Ambedkar Konaseema at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Eluru",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Alluvial; red clayey; black cotton in parts",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Eluru at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Eluru",
+    "Crop_Rank": 2,
+    "Crop": "Maize",
+    "District_Soil_Types": "Alluvial; red clayey; black cotton in parts",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for Eluru at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Eluru",
+    "Crop_Rank": 3,
+    "Crop": "Blackgram",
+    "District_Soil_Types": "Alluvial; red clayey; black cotton in parts",
+    "Use_for_AI": "Blackgram is a major/commonly suitable crop candidate for Eluru at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Eluru",
+    "Crop_Rank": 4,
+    "Crop": "Tobacco",
+    "District_Soil_Types": "Alluvial; red clayey; black cotton in parts",
+    "Use_for_AI": "Tobacco is a major/commonly suitable crop candidate for Eluru at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Eluru",
+    "Crop_Rank": 5,
+    "Crop": "Chillies",
+    "District_Soil_Types": "Alluvial; red clayey; black cotton in parts",
+    "Use_for_AI": "Chillies is a major/commonly suitable crop candidate for Eluru at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "West Godavari",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Deltaic/alluvial; red clayey; coastal soils",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for West Godavari at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "West Godavari",
+    "Crop_Rank": 2,
+    "Crop": "Maize",
+    "District_Soil_Types": "Deltaic/alluvial; red clayey; coastal soils",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for West Godavari at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "West Godavari",
+    "Crop_Rank": 3,
+    "Crop": "Blackgram",
+    "District_Soil_Types": "Deltaic/alluvial; red clayey; coastal soils",
+    "Use_for_AI": "Blackgram is a major/commonly suitable crop candidate for West Godavari at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "West Godavari",
+    "Crop_Rank": 4,
+    "Crop": "Tobacco",
+    "District_Soil_Types": "Deltaic/alluvial; red clayey; coastal soils",
+    "Use_for_AI": "Tobacco is a major/commonly suitable crop candidate for West Godavari at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "West Godavari",
+    "Crop_Rank": 5,
+    "Crop": "Sugarcane",
+    "District_Soil_Types": "Deltaic/alluvial; red clayey; coastal soils",
+    "Use_for_AI": "Sugarcane is a major/commonly suitable crop candidate for West Godavari at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "NTR",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for NTR at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "NTR",
+    "Crop_Rank": 2,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for NTR at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "NTR",
+    "Crop_Rank": 3,
+    "Crop": "Chillies",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Chillies is a major/commonly suitable crop candidate for NTR at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "NTR",
+    "Crop_Rank": 4,
+    "Crop": "Maize",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for NTR at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "NTR",
+    "Crop_Rank": 5,
+    "Crop": "Redgram",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Redgram is a major/commonly suitable crop candidate for NTR at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Krishna",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Deltaic alluvium; black cotton; coastal alluvial",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Krishna at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Krishna",
+    "Crop_Rank": 2,
+    "Crop": "Blackgram",
+    "District_Soil_Types": "Deltaic alluvium; black cotton; coastal alluvial",
+    "Use_for_AI": "Blackgram is a major/commonly suitable crop candidate for Krishna at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Krishna",
+    "Crop_Rank": 3,
+    "Crop": "Maize",
+    "District_Soil_Types": "Deltaic alluvium; black cotton; coastal alluvial",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for Krishna at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Krishna",
+    "Crop_Rank": 4,
+    "Crop": "Sugarcane",
+    "District_Soil_Types": "Deltaic alluvium; black cotton; coastal alluvial",
+    "Use_for_AI": "Sugarcane is a major/commonly suitable crop candidate for Krishna at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Krishna",
+    "Crop_Rank": 5,
+    "Crop": "Chillies",
+    "District_Soil_Types": "Deltaic alluvium; black cotton; coastal alluvial",
+    "Use_for_AI": "Chillies is a major/commonly suitable crop candidate for Krishna at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Palnadu",
+    "Crop_Rank": 1,
+    "Crop": "Chillies",
+    "District_Soil_Types": "Black cotton; red sandy loam; red loamy",
+    "Use_for_AI": "Chillies is a major/commonly suitable crop candidate for Palnadu at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Palnadu",
+    "Crop_Rank": 2,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Black cotton; red sandy loam; red loamy",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for Palnadu at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Palnadu",
+    "Crop_Rank": 3,
+    "Crop": "Bengalgram",
+    "District_Soil_Types": "Black cotton; red sandy loam; red loamy",
+    "Use_for_AI": "Bengalgram is a major/commonly suitable crop candidate for Palnadu at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Palnadu",
+    "Crop_Rank": 4,
+    "Crop": "Redgram",
+    "District_Soil_Types": "Black cotton; red sandy loam; red loamy",
+    "Use_for_AI": "Redgram is a major/commonly suitable crop candidate for Palnadu at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Palnadu",
+    "Crop_Rank": 5,
+    "Crop": "Maize",
+    "District_Soil_Types": "Black cotton; red sandy loam; red loamy",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for Palnadu at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Guntur",
+    "Crop_Rank": 1,
+    "Crop": "Chillies",
+    "District_Soil_Types": "Black cotton; alluvial; red loamy",
+    "Use_for_AI": "Chillies is a major/commonly suitable crop candidate for Guntur at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Guntur",
+    "Crop_Rank": 2,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Black cotton; alluvial; red loamy",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Guntur at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Guntur",
+    "Crop_Rank": 3,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Black cotton; alluvial; red loamy",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for Guntur at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Guntur",
+    "Crop_Rank": 4,
+    "Crop": "Bengalgram",
+    "District_Soil_Types": "Black cotton; alluvial; red loamy",
+    "Use_for_AI": "Bengalgram is a major/commonly suitable crop candidate for Guntur at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Guntur",
+    "Crop_Rank": 5,
+    "Crop": "Maize",
+    "District_Soil_Types": "Black cotton; alluvial; red loamy",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for Guntur at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Bapatla",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Black cotton; coastal/alluvial; red loamy",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Bapatla at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Bapatla",
+    "Crop_Rank": 2,
+    "Crop": "Blackgram",
+    "District_Soil_Types": "Black cotton; coastal/alluvial; red loamy",
+    "Use_for_AI": "Blackgram is a major/commonly suitable crop candidate for Bapatla at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Bapatla",
+    "Crop_Rank": 3,
+    "Crop": "Chillies",
+    "District_Soil_Types": "Black cotton; coastal/alluvial; red loamy",
+    "Use_for_AI": "Chillies is a major/commonly suitable crop candidate for Bapatla at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Bapatla",
+    "Crop_Rank": 4,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Black cotton; coastal/alluvial; red loamy",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for Bapatla at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Bapatla",
+    "Crop_Rank": 5,
+    "Crop": "Maize",
+    "District_Soil_Types": "Black cotton; coastal/alluvial; red loamy",
+    "Use_for_AI": "Maize is a major/commonly suitable crop candidate for Bapatla at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Prakasam",
+    "Crop_Rank": 1,
+    "Crop": "Tobacco",
+    "District_Soil_Types": "Red sandy loam; red loamy; lateritic; black cotton in parts",
+    "Use_for_AI": "Tobacco is a major/commonly suitable crop candidate for Prakasam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Prakasam",
+    "Crop_Rank": 2,
+    "Crop": "Bengalgram",
+    "District_Soil_Types": "Red sandy loam; red loamy; lateritic; black cotton in parts",
+    "Use_for_AI": "Bengalgram is a major/commonly suitable crop candidate for Prakasam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Prakasam",
+    "Crop_Rank": 3,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red sandy loam; red loamy; lateritic; black cotton in parts",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Prakasam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Prakasam",
+    "Crop_Rank": 4,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Red sandy loam; red loamy; lateritic; black cotton in parts",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for Prakasam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Prakasam",
+    "Crop_Rank": 5,
+    "Crop": "Redgram",
+    "District_Soil_Types": "Red sandy loam; red loamy; lateritic; black cotton in parts",
+    "Use_for_AI": "Redgram is a major/commonly suitable crop candidate for Prakasam at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "SPSR Nellore",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Alluvial; red sandy loam; coastal soils; lateritic in parts",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for SPSR Nellore at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "SPSR Nellore",
+    "Crop_Rank": 2,
+    "Crop": "Blackgram",
+    "District_Soil_Types": "Alluvial; red sandy loam; coastal soils; lateritic in parts",
+    "Use_for_AI": "Blackgram is a major/commonly suitable crop candidate for SPSR Nellore at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "SPSR Nellore",
+    "Crop_Rank": 3,
+    "Crop": "Greengram",
+    "District_Soil_Types": "Alluvial; red sandy loam; coastal soils; lateritic in parts",
+    "Use_for_AI": "Greengram is a major/commonly suitable crop candidate for SPSR Nellore at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "SPSR Nellore",
+    "Crop_Rank": 4,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Alluvial; red sandy loam; coastal soils; lateritic in parts",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for SPSR Nellore at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "SPSR Nellore",
+    "Crop_Rank": 5,
+    "Crop": "Lemon",
+    "District_Soil_Types": "Alluvial; red sandy loam; coastal soils; lateritic in parts",
+    "Use_for_AI": "Lemon is a major/commonly suitable crop candidate for SPSR Nellore at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Kurnool",
+    "Crop_Rank": 1,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for Kurnool at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Kurnool",
+    "Crop_Rank": 2,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Kurnool at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Kurnool",
+    "Crop_Rank": 3,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Kurnool at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Kurnool",
+    "Crop_Rank": 4,
+    "Crop": "Redgram",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Redgram is a major/commonly suitable crop candidate for Kurnool at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Kurnool",
+    "Crop_Rank": 5,
+    "Crop": "Bengalgram",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Bengalgram is a major/commonly suitable crop candidate for Kurnool at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Nandyal",
+    "Crop_Rank": 1,
+    "Crop": "Bengalgram",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Bengalgram is a major/commonly suitable crop candidate for Nandyal at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Nandyal",
+    "Crop_Rank": 2,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for Nandyal at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Nandyal",
+    "Crop_Rank": 3,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Nandyal at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Nandyal",
+    "Crop_Rank": 4,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Nandyal at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Nandyal",
+    "Crop_Rank": 5,
+    "Crop": "Redgram",
+    "District_Soil_Types": "Black cotton; red loamy; alluvial",
+    "Use_for_AI": "Redgram is a major/commonly suitable crop candidate for Nandyal at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Ananthapuramu",
+    "Crop_Rank": 1,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red earth; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Ananthapuramu at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Ananthapuramu",
+    "Crop_Rank": 2,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Red earth; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for Ananthapuramu at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Ananthapuramu",
+    "Crop_Rank": 3,
+    "Crop": "Redgram",
+    "District_Soil_Types": "Red earth; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Redgram is a major/commonly suitable crop candidate for Ananthapuramu at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Ananthapuramu",
+    "Crop_Rank": 4,
+    "Crop": "Bengalgram",
+    "District_Soil_Types": "Red earth; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Bengalgram is a major/commonly suitable crop candidate for Ananthapuramu at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Ananthapuramu",
+    "Crop_Rank": 5,
+    "Crop": "Sunflower",
+    "District_Soil_Types": "Red earth; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Sunflower is a major/commonly suitable crop candidate for Ananthapuramu at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Sri Sathya Sai",
+    "Crop_Rank": 1,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red earth; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Sri Sathya Sai at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Sri Sathya Sai",
+    "Crop_Rank": 2,
+    "Crop": "Bengalgram",
+    "District_Soil_Types": "Red earth; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Bengalgram is a major/commonly suitable crop candidate for Sri Sathya Sai at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Sri Sathya Sai",
+    "Crop_Rank": 3,
+    "Crop": "Redgram",
+    "District_Soil_Types": "Red earth; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Redgram is a major/commonly suitable crop candidate for Sri Sathya Sai at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Sri Sathya Sai",
+    "Crop_Rank": 4,
+    "Crop": "Sunflower",
+    "District_Soil_Types": "Red earth; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Sunflower is a major/commonly suitable crop candidate for Sri Sathya Sai at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Sri Sathya Sai",
+    "Crop_Rank": 5,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Red earth; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for Sri Sathya Sai at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "YSR Kadapa",
+    "Crop_Rank": 1,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red loamy; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for YSR Kadapa at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "YSR Kadapa",
+    "Crop_Rank": 2,
+    "Crop": "Bengalgram",
+    "District_Soil_Types": "Red loamy; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Bengalgram is a major/commonly suitable crop candidate for YSR Kadapa at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "YSR Kadapa",
+    "Crop_Rank": 3,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Red loamy; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for YSR Kadapa at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "YSR Kadapa",
+    "Crop_Rank": 4,
+    "Crop": "Redgram",
+    "District_Soil_Types": "Red loamy; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Redgram is a major/commonly suitable crop candidate for YSR Kadapa at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "YSR Kadapa",
+    "Crop_Rank": 5,
+    "Crop": "Sunflower",
+    "District_Soil_Types": "Red loamy; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Sunflower is a major/commonly suitable crop candidate for YSR Kadapa at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Annamayya",
+    "Crop_Rank": 1,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red loamy; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Annamayya at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Annamayya",
+    "Crop_Rank": 2,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Red loamy; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Annamayya at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Annamayya",
+    "Crop_Rank": 3,
+    "Crop": "Sunflower",
+    "District_Soil_Types": "Red loamy; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Sunflower is a major/commonly suitable crop candidate for Annamayya at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Annamayya",
+    "Crop_Rank": 4,
+    "Crop": "Cotton",
+    "District_Soil_Types": "Red loamy; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Cotton is a major/commonly suitable crop candidate for Annamayya at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Annamayya",
+    "Crop_Rank": 5,
+    "Crop": "Mango",
+    "District_Soil_Types": "Red loamy; red sandy loam; black cotton in parts",
+    "Use_for_AI": "Mango is a major/commonly suitable crop candidate for Annamayya at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Tirupati",
+    "Crop_Rank": 1,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Red loamy; red sandy loam; alluvial; lateritic",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Tirupati at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Tirupati",
+    "Crop_Rank": 2,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red loamy; red sandy loam; alluvial; lateritic",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Tirupati at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Tirupati",
+    "Crop_Rank": 3,
+    "Crop": "Sugarcane",
+    "District_Soil_Types": "Red loamy; red sandy loam; alluvial; lateritic",
+    "Use_for_AI": "Sugarcane is a major/commonly suitable crop candidate for Tirupati at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Tirupati",
+    "Crop_Rank": 4,
+    "Crop": "Redgram",
+    "District_Soil_Types": "Red loamy; red sandy loam; alluvial; lateritic",
+    "Use_for_AI": "Redgram is a major/commonly suitable crop candidate for Tirupati at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Tirupati",
+    "Crop_Rank": 5,
+    "Crop": "Mango",
+    "District_Soil_Types": "Red loamy; red sandy loam; alluvial; lateritic",
+    "Use_for_AI": "Mango is a major/commonly suitable crop candidate for Tirupati at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Chittoor",
+    "Crop_Rank": 1,
+    "Crop": "Mango",
+    "District_Soil_Types": "Red loamy; red sandy loam; lateritic; alluvial",
+    "Use_for_AI": "Mango is a major/commonly suitable crop candidate for Chittoor at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Chittoor",
+    "Crop_Rank": 2,
+    "Crop": "Groundnut",
+    "District_Soil_Types": "Red loamy; red sandy loam; lateritic; alluvial",
+    "Use_for_AI": "Groundnut is a major/commonly suitable crop candidate for Chittoor at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Chittoor",
+    "Crop_Rank": 3,
+    "Crop": "Paddy",
+    "District_Soil_Types": "Red loamy; red sandy loam; lateritic; alluvial",
+    "Use_for_AI": "Paddy is a major/commonly suitable crop candidate for Chittoor at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Chittoor",
+    "Crop_Rank": 4,
+    "Crop": "Sugarcane",
+    "District_Soil_Types": "Red loamy; red sandy loam; lateritic; alluvial",
+    "Use_for_AI": "Sugarcane is a major/commonly suitable crop candidate for Chittoor at district level; confirm with mandal soil test, irrigation and season."
+  },
+  {
+    "District": "Chittoor",
+    "Crop_Rank": 5,
+    "Crop": "Tomato",
+    "District_Soil_Types": "Red loamy; red sandy loam; lateritic; alluvial",
+    "Use_for_AI": "Tomato is a major/commonly suitable crop candidate for Chittoor at district level; confirm with mandal soil test, irrigation and season."
+  }
+]

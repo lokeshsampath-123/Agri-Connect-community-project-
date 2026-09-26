@@ -7,43 +7,64 @@ import { TRANSLATIONS } from '@/lib/translations';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 const AP_DISTRICTS = [
-  'Guntur',
-  'Kurnool',
-  'Krishna',
-  'Anantapur',
-  'Visakhapatnam (Vizag)',
-  'Nellore',
-  'Chittoor',
-  'Prakasam',
   'Srikakulam',
+  'Parvathipuram Manyam',
   'Vizianagaram',
-  'West Godavari',
+  'Visakhapatnam',
+  'Alluri Sitharama Raju (ASR)',
+  'Anakapalli',
+  'Kakinada',
   'East Godavari',
-  'Kadapa (YSR Kadapa)'
+  'Dr. B.R. Ambedkar Konaseema',
+  'Eluru',
+  'West Godavari',
+  'NTR',
+  'Krishna',
+  'Palnadu',
+  'Guntur',
+  'Bapatla',
+  'Prakasam',
+  'SPSR Nellore',
+  'Kurnool',
+  'Nandyal',
+  'Ananthapuramu',
+  'Sri Sathya Sai',
+  'YSR Kadapa',
+  'Annamayya',
+  'Tirupati',
+  'Chittoor'
 ];
 
 const AP_MANDALS = {
-  'Guntur': ['Tenali', 'Mangalagiri', 'Ponnur', 'Bapatla', 'Repalle', 'Narasaraopet', 'Amaravathi'],
-  'Kurnool': ['Adoni', 'Nandyal', 'Yemmiganur', 'Dhone', 'Banaganapalle', 'Nandikotkur'],
-  'Krishna': ['Vijayawada', 'Machilipatnam', 'Gudivada', 'Nuzvid', 'Jaggaiahpeta', 'Vuyyuru'],
-  'Anantapur': ['Dharmavaram', 'Guntakal', 'Hindupur', 'Kadiri', 'Tadipatri', 'Rayadurg'],
-  'Visakhapatnam (Vizag)': ['Gajuwaka', 'Anakapalle', 'Pendurthi', 'Bheemunipatnam', 'Araku', 'Madugula'],
-  'Nellore': ['Gudur', 'Kavali', 'Udayagiri', 'Atmakur', 'Sullurpeta', 'Naidupeta'],
-  'Chittoor': ['Tirupati', 'Madanapalle', 'Chittoor', 'Punganur', 'Sri Kalahasti', 'Kuppam'],
-  'Prakasam': ['Ongole', 'Chirala', 'Markapur', 'Kandukur', 'Kanigiri', 'Giddalur'],
-  'Srikakulam': ['Palasa', 'Tekkali', 'Ichchapuram', 'Pathapatnam', 'Sompeta'],
-  'Vizianagaram': ['Bobbili', 'Parvathipuram', 'Salur', 'Cheepurupalli', 'Srungavarapukota'],
-  'West Godavari': ['Eluru', 'Bhimavaram', 'Tadepalligudem', 'Tanuku', 'Palakollu', 'Narsapuram'],
-  'East Godavari': ['Rajamahendravaram', 'Kakinada', 'Amalapuram', 'Mandapeta', 'Peddapuram', 'Tuni'],
-  'Kadapa (YSR Kadapa)': ['Proddatur', 'Pulivendula', 'Badvel', 'Rayachoty', 'Jammalamadugu']
+  'Srikakulam': ['Palasa', 'Amadalavalasa', 'Srikakulam Rural', 'Tekkali', 'Narasannapeta', 'Ichchapuram', 'Sompeta', 'Rajam', 'Etcherla', 'Pathapatnam'],
+  'Parvathipuram Manyam': ['Parvathipuram', 'Balajipeta', 'Seethampeta', 'Makkuva', 'Komarada', 'Salur', 'Kurupam', 'Gummalaxmipuram', 'Pachipenta', 'Jiththajodu'],
+  'Vizianagaram': ['Bhogapuram', 'Chelluru', 'Vizianagaram Rural', 'Gajapathinagaram', 'Srungavarapukota', 'Nellimarla', 'Bobbili', 'Badangi', 'Pusapatirega', 'Garividi'],
+  'Visakhapatnam': ['Pendurthi', 'Anandapuram', 'Bheemunipatnam', 'Gajuwaka', 'Seethammadhara', 'Maharanipeta', 'Gopalapatnam', 'Padmanabham', 'Mulagada', 'Pedagantyada'],
+  'Alluri Sitharama Raju (ASR)': ['Araku Valley', 'Chintapalle', 'Paderu', 'Ananthagiri', 'Rampachodavaram', 'Maredumilli', 'Dumbriguda', 'G.Madugula', 'Addateegala', 'Devipatnam'],
+  'Anakapalli': ['Anakapalli', 'Atchutapuram', 'Chodavaram', 'Narsipatnam', 'Yelamanchili', 'Paravada', 'Sabbavaram', 'Kasimkota', 'Nakkapalli', 'Payakaraopeta'],
+  'Kakinada': ['Kakinada Rural', 'Samalkota', 'Peddapuram', 'Pithapuram', 'Tuni', 'Prathipadu', 'Gollaprolu', 'Jaggampeta', 'Karapa', 'Thallarevu'],
+  'East Godavari': ['Rajahmundry Rural', 'Ravulapalem', 'Kovvur', 'Nidadavole', 'Anaparthi', 'Gopalapuram', 'Devarapalle', 'Korukonda', 'Chagallu', 'Kadiam'],
+  'Dr. B.R. Ambedkar Konaseema': ['Amalapuram', 'Razole', 'Kothapeta', 'Mandapeta', 'Mummidivaram', 'P.Gannavaram', 'Rayavaram', 'Malikipuram', 'Ambajipeta', 'Kapileswarapuram'],
+  'Eluru': ['Eluru Rural', 'Jangareddygudem', 'Chintalapudi', 'Tadepalligudem', 'Denduluru', 'Nuzvid', 'Bhimadole', 'Chatrai', 'Pedapadu', 'Kukunoor'],
+  'West Godavari': ['Bhimavaram', 'Tanuku', 'Palakollu', 'Narasapuram', 'Achanta', 'Penugonda', 'Penumantra', 'Undi', 'Iragavaram', 'Mogalthur'],
+  'NTR': ['Vijayawada Rural', 'Jaggayyapeta', 'Ibrahimpatnam', 'Kanchikacherla', 'Nandigama', 'Mylavaram', 'Tiruvuru', 'G.Konduru', 'Vatsavai', 'Penuganchiprolu'],
+  'Krishna': ['Gudivada', 'Machilipatnam', 'Vuyyuru', 'Pamarru', 'Challapalli', 'Avanigadda', 'Gannavaram', 'Penamaluru', 'Bantumilli', 'Krittivennu'],
+  'Palnadu': ['Narasaraopet', 'Macherla', 'Piduguralla', 'Chilakaluripet', 'Sattenapalle', 'Gurazala', 'Vinukonda', 'Dachepalle', 'Krosuru', 'Bellamkonda'],
+  'Guntur': ['Guntur Rural', 'Tenali', 'Duggirala', 'Tadikonda', 'Medikonduru', 'Chebrolu', 'Mangalagiri', 'Ponnur', 'Pedakakani', 'Prathipadu'],
+  'Bapatla': ['Chirala', 'Bapatla', 'Parchur', 'Addanki', 'Repalle', 'Vemuru', 'Martur', 'Korisapadu', 'Karlapalem', 'Nizampatnam'],
+  'Prakasam': ['Ongole', 'Kandukur', 'Podili', 'Kanigiri', 'Markapuram', 'Singarayakonda', 'Chimakurthi', 'Giddalur', 'Yerragondapalem', 'Donakonda'],
+  'SPSR Nellore': ['Nellore Rural', 'Kavali', 'Gudur', 'Atmakur', 'Venkatagiri', 'Naidupeta', 'Buchireddypalem', 'Kovur', 'Udayagiri', 'Podalakur'],
+  'Kurnool': ['Adoni', 'Kurnool Rural', 'Yemmiganur', 'Kodumur', 'Pathikonda', 'Alur', 'Mantralayam', 'Goneganandla', 'Nandavaram', 'Orvakal'],
+  'Nandyal': ['Nandyal', 'Dhone', 'Allagadda', 'Banaganapalle', 'Koilkuntla', 'Atmakur', 'Srisailam', 'Owk', 'Nandikotkur', 'Bethamcherla'],
+  'Ananthapuramu': ['Tadipatri', 'Anantapuramu Rural', 'Kalyandurg', 'Guntakal', 'Gooty', 'Uravakonda', 'Rayadurg', 'Pamidi', 'Singanamala', 'Raptadu'],
+  'Sri Sathya Sai': ['Puttaparthi', 'Hindupur', 'Kadiri', 'Dharmavaram', 'Madakasira', 'Penukonda', 'Gorantla', 'Somandepalle', 'Bukkapatnam', 'Tanakal'],
+  'YSR Kadapa': ['Pulivendula', 'Kadapa Rural', 'Jammalamadugu', 'Proddatur', 'Badvel', 'Mydukur', 'Kamalapuram', 'Vempalli', 'Yerraguntla', 'Pendlimarri'],
+  'Annamayya': ['Madanapalle', 'Rajampet', 'Rayachoti', 'Piler', 'Railway Koduru', 'Punganur', 'Chowdepalle', 'Lakkireddipalli', 'Tamballapalle', 'Chinnamandem'],
+  'Tirupati': ['Srikalahasti', 'Chandragiri', 'Tirupati Rural', 'Venkatagiri-border', 'Sullurpeta', 'Naidupeta-fringe', 'Tada', 'Satyavedu', 'Puttur', 'Narayanavanam'],
+  'Chittoor': ['Chittoor Rural', 'Palamaner', 'Kuppam', 'Nagari', 'GD Nellore', 'Bangarupalem', 'Santhipuram', 'Gudupalle', 'Karvetinagar', 'Vedurukuppam']
 };
 
-const DEFAULT_AVATARS = [
-  'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&q=80&w=150',
-  'https://images.unsplash.com/photo-1592949873599-8ab2ccd5844a?auto=format&fit=crop&q=80&w=150',
-  'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=150',
-  'https://images.unsplash.com/photo-1589923188900-85dae4409f7c?auto=format&fit=crop&q=80&w=150'
-];
+const DEFAULT_AVATAR = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23a0a0a0"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6.1 0-8 4-8 4v2h16v-2s-1.9-4-8-4z"/></svg>`;
 
 export default function Settings() {
   const router = useRouter();
@@ -54,7 +75,7 @@ export default function Settings() {
   const [name, setName] = useState('');
   const [district, setDistrict] = useState('Guntur');
   const [mandal, setMandal] = useState('Tenali');
-  const [profileImage, setProfileImage] = useState(DEFAULT_AVATARS[0]);
+  const [profileImage, setProfileImage] = useState(DEFAULT_AVATAR);
   const [language, setLanguage] = useState('en');
   const [areaUnit, setAreaUnit] = useState('acres');
   const [weightUnit, setWeightUnit] = useState('quintal');
@@ -74,7 +95,7 @@ export default function Settings() {
       setName(parsed.name || '');
       setDistrict(parsed.district || 'Guntur');
       setMandal(parsed.village || 'Tenali');
-      setProfileImage(parsed.profileImage || DEFAULT_AVATARS[0]);
+      setProfileImage(parsed.profileImage || DEFAULT_AVATAR);
       setLanguage(parsed.language || 'en');
       setAreaUnit(parsed.areaUnit || 'acres');
       setWeightUnit(parsed.weightUnit || 'quintal');
@@ -138,6 +159,14 @@ export default function Settings() {
     localStorage.setItem('user_profile', JSON.stringify(updatedProfile));
     localStorage.setItem('agri_lang', language); // synchronize active translation language globally
 
+    // Set Google Translate cookie dynamically
+    let googtransVal = '';
+    if (language === 'te') googtransVal = '/en/te';
+    else if (language === 'hi') googtransVal = '/en/hi';
+
+    document.cookie = `googtrans=${googtransVal}; path=/;`;
+    document.cookie = `googtrans=${googtransVal}; path=/; domain=${window.location.hostname};`;
+
     // Sync registered user database as well
     const savedUserJson = localStorage.getItem('registered_user');
     if (savedUserJson) {
@@ -147,8 +176,8 @@ export default function Settings() {
       }
     }
 
-    setSuccessMsg(TRANSLATIONS[language]?.changesSaved || 'Settings updated successfully!');
     setProfile(updatedProfile);
+    window.location.reload();
 
     // Auto-scroll to top to show success banner
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -162,7 +191,7 @@ export default function Settings() {
     );
   }
 
-  const t = TRANSLATIONS[language] || TRANSLATIONS.en;
+  const t = TRANSLATIONS.en;
 
   return (
     <div className="flex min-h-screen bg-background text-on-surface">
@@ -218,13 +247,14 @@ export default function Settings() {
                 </h3>
               </div>
 
-              {/* Avatar Selector and Custom Upload */}
+              {/* Profile Image upload section */}
               <div className="flex flex-col sm:flex-row gap-6 items-center">
                 <div className="relative shrink-0 group">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
                     src={profileImage} 
                     alt="Farmer Avatar" 
-                    className="w-24 h-24 rounded-3xl object-cover border-4 border-primary shadow-md"
+                    className="w-24 h-24 rounded-3xl object-cover border-4 border-primary shadow-md bg-surface-container"
                   />
                   <label className="absolute inset-0 bg-black/55 text-white text-[10px] font-black rounded-3xl flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
                     <span className="material-symbols-outlined text-lg">upload</span>
@@ -238,26 +268,18 @@ export default function Settings() {
                   </label>
                 </div>
 
-                <div className="space-y-3">
-                  <p className="text-xs font-bold text-on-surface-variant">
-                    {t.avatarLabel || 'Click Avatar to Change Profile Image'}
-                  </p>
-                  <div className="flex flex-wrap gap-2.5">
-                    {DEFAULT_AVATARS.map((av, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => setProfileImage(av)}
-                        className={`w-12 h-12 rounded-xl overflow-hidden border-2 transition-all ${
-                          profileImage === av ? 'border-primary scale-105' : 'border-outline-variant hover:scale-102'
-                        }`}
-                      >
-                        <img src={av} alt={`Avatar ${idx+1}`} className="w-full h-full object-cover" />
-                      </button>
-                    ))}
-                  </div>
+                <div className="space-y-2 text-center sm:text-left">
+                  <label className="inline-block bg-primary/10 text-primary border border-primary/20 hover:bg-primary/15 transition-colors text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer">
+                    Upload Custom Photo
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      onChange={handleImageUpload}
+                    />
+                  </label>
                   <p className="text-[10px] text-on-surface-variant/70 font-medium">
-                    Supports JPG, PNG, or GIF up to 2MB. Updates live instantly in the sidebar.
+                    Upload your custom profile photo (up to 2MB). If no photo is uploaded, the default profile silhouette will be used.
                   </p>
                 </div>
               </div>
@@ -333,38 +355,6 @@ export default function Settings() {
                     <option value="en">English</option>
                     <option value="te">తెలుగు (Telugu)</option>
                     <option value="hi">हिन्दी (Hindi)</option>
-                  </select>
-                </div>
-
-                {/* Land Area Select */}
-                <div>
-                  <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-wider mb-2">
-                    {t.areaUnitLabel || 'Land Area Unit'}
-                  </label>
-                  <select 
-                    className="w-full bg-white border border-outline-variant rounded-2xl py-3 px-4 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all text-xs font-semibold text-on-surface"
-                    value={areaUnit}
-                    onChange={(e) => setAreaUnit(e.target.value)}
-                  >
-                    <option value="acres">{t.acres || 'Acres'}</option>
-                    <option value="hectares">{t.hectares || 'Hectares'}</option>
-                    <option value="sqMeters">{t.sqMeters || 'Square Meters'}</option>
-                  </select>
-                </div>
-
-                {/* Weight Unit Select */}
-                <div>
-                  <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-wider mb-2">
-                    {t.weightUnitLabel || 'Weight / Price Unit'}
-                  </label>
-                  <select 
-                    className="w-full bg-white border border-outline-variant rounded-2xl py-3 px-4 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all text-xs font-semibold text-on-surface"
-                    value={weightUnit}
-                    onChange={(e) => setWeightUnit(e.target.value)}
-                  >
-                    <option value="quintal">{t.quintal || 'Quintal'}</option>
-                    <option value="kg">{t.kg || 'Kilogram (Kg)'}</option>
-                    <option value="tonne">{t.tonne || 'Tonne'}</option>
                   </select>
                 </div>
               </div>

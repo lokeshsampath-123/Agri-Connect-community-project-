@@ -514,12 +514,12 @@ function fallbackFarmBotReply(userQuestion, defaultDistrict = 'Guntur') {
 
   const isAgriRelated = containsAny(agriVocab);
   if (!isAgriRelated && cleanText.length > 0) {
-    return "I am FarmBot, your AgriConnect AI advisor. I can only assist with topics related to farming, crop health, soil nutrients, weather advisories, and Mandi market prices in Andhra Pradesh. Could you please tell me what crops you are cultivating or any issues you are facing in your fields?";
+    return "**FarmBot Advisor:**\n\nI am FarmBot, your AgriConnect AI advisor. I can only assist with topics related to farming, crop health, soil nutrients, weather advisories, and Mandi market prices in Andhra Pradesh.\n\n*Could you please tell me what crops you are cultivating or any issues you are facing in your fields?*";
   }
 
   // 2. Greetings handler
   if (containsAny(greetingKeywords)) {
-    return `Hello! I am FarmBot, your AgriConnect AI advisor. How can I assist you today with crop diseases, pest controls, Mandi prices, or soil nutrients in ${activeDistrict}? What crops are you cultivating this season?`;
+    return `**Hello!** I am **FarmBot**, your AgriConnect AI advisor for **${activeDistrict}** district.\n\nHow can I assist you today?\n1. **Pest & Disease Control** (Ask about field symptoms, remedies, or chemical/organic spray timing)\n2. **Mandi Market Prices** (Ask about current crop rates and trend forecasts)\n3. **Weather Forecasts** (Ask about rainfall, humidity, or spray planning)\n4. **Soil & Fertilizer Advisories** (Ask about NPK ratios, soil pH, and compost recommendations)\n\n*Which crop are you currently growing in your field, and how many weeks old is it?*`;
   }
 
   // 3. Pricing & Market Rates intent check (Evaluated FIRST to prioritize crop price queries)
@@ -536,8 +536,12 @@ function fallbackFarmBotReply(userQuestion, defaultDistrict = 'Guntur') {
     }
 
     if (priceItem) {
-      const changeText = priceItem.change.startsWith('+') ? `up by ${priceItem.change}` : `down by ${priceItem.change}`;
-      let response = `In the **${activeDistrict}** Mandi market, **${priceItem.name}** is currently trading around **₹${priceItem.price.toLocaleString('en-IN')}${priceItem.unit}**, with daily arrival volumes estimated at **${priceItem.arrival}**. The price trend is ${changeText}.\n\n`;
+      const changeText = priceItem.change.startsWith('+') ? `📈 up by ${priceItem.change}` : `📉 down by ${priceItem.change}`;
+      let response = `📊 **Mandi Market Price Update for ${activeDistrict}:**\n\n`;
+      response += `* 🌾 **Crop:** ${priceItem.name}\n`;
+      response += `* 💰 **Current Rate:** **₹${priceItem.price.toLocaleString('en-IN')}${priceItem.unit}**\n`;
+      response += `* 📦 **Daily Arrivals:** ${priceItem.arrival}\n`;
+      response += `* 📈 **Trend:** ${changeText}\n\n`;
       
       // Look up district market insights for matched crop
       const insight = districtData.insights.find(ins => {
@@ -548,7 +552,7 @@ function fallbackFarmBotReply(userQuestion, defaultDistrict = 'Guntur') {
       }) || districtData.insights[0];
 
       if (insight) {
-        response += `**Mandi Outlook (${insight.tag} - ${insight.duration}):** ${insight.title} — ${insight.desc}\n\n`;
+        response += `💡 **Mandi Outlook (${insight.tag} — ${insight.duration}):**\n${insight.title} — ${insight.desc}\n\n`;
       }
 
       const followUpQuestions = {
@@ -573,19 +577,19 @@ function fallbackFarmBotReply(userQuestion, defaultDistrict = 'Guntur') {
       }
 
       if (generalPrice) {
-        let response = `In Andhra Pradesh spot markets, **${generalPrice.name}** is trading around **₹${generalPrice.price.toLocaleString('en-IN')}${generalPrice.unit}**.\n\n`;
-        response += `**Market Recommendation:** Direct sales to regional processing units or cooperative markets are advised for optimal margins. Check local Rythu Bharosa Kendra (RBK) boards for daily floor price cards.\n\n`;
+        let response = `Spot market rate for **${generalPrice.name}** is trading around **₹${generalPrice.price.toLocaleString('en-IN')}${generalPrice.unit}**.\n\n`;
+        response += `💡 **Market Recommendation:** Direct sales to regional processing units or cooperative markets are advised for optimal margins. Check local Rythu Bharosa Kendra (RBK) boards for daily floor price cards.\n\n`;
         response += `What is your expected yield per acre, and do you have a target price before selling?`;
         return response;
       }
 
       // General price sheet
-      let response = `Here is the current Mandi price range across major Andhra Pradesh yards:\n`;
-      response += `- **Paddy (Sona Masuri):** ₹2,400 - ₹2,580 per quintal\n`;
-      response += `- **Cotton (Long Staple):** ₹6,800 - ₹7,500 per quintal\n`;
-      response += `- **Red Chillies (Guntur Teja):** ₹18,000 - ₹21,500 per quintal\n`;
-      response += `- **Tomatoes (Grade A):** ₹1,200 - ₹1,550 per quintal\n`;
-      response += `- **Groundnut (Bold):** ₹6,200 - ₹6,800 per quintal\n\n`;
+      let response = `📊 **Andhra Pradesh Mandi Price Ranges:**\n\n`;
+      response += `* 🌾 **Paddy (Sona Masuri):** ₹2,400 - ₹2,580 per quintal\n`;
+      response += `* 🌾 **Cotton (Long Staple):** ₹6,800 - ₹7,500 per quintal\n`;
+      response += `* 🌾 **Red Chillies (Guntur Teja):** ₹18,000 - ₹21,500 per quintal\n`;
+      response += `* 🌾 **Tomatoes (Grade A):** ₹1,200 - ₹1,550 per quintal\n`;
+      response += `* 🌾 **Groundnut (Bold):** ₹6,200 - ₹6,800 per quintal\n\n`;
       response += `Which specific crop's market price are you trying to check, and in which district of Andhra Pradesh are you situated?`;
       return response;
     }
@@ -601,14 +605,14 @@ function fallbackFarmBotReply(userQuestion, defaultDistrict = 'Guntur') {
       advisory: `Moderate temperatures and light winds in ${activeDistrict}. Ideal conditions for standard farming operations. Maintain standard irrigation and weeding cycles.`
     };
 
-    let response = `Here is the localized weather and spray advisory for **${activeDistrict} District**:\n`;
-    response += `**Alert Status (${alert.type} — ${alert.severity.toUpperCase()}):** ${alert.title}\n`;
-    response += `*Advisory:* ${alert.advisory}\n\n`;
+    let response = `🌦️ **Localized Weather Advisory for ${activeDistrict} District:**\n\n`;
+    response += `🛑 **Alert Status (${alert.type} — ${alert.severity.toUpperCase()}):** ${alert.title}\n`;
+    response += `💡 **Agronomist Advisory:** ${alert.advisory}\n\n`;
 
     if (matchedCropKey === 'paddy') {
-      response += `*Paddy Water Management:* Keep drainage bunds checked to prevent stagnant overflow.\n\n`;
+      response += `💧 *Paddy Water Management:* Keep drainage bunds checked to prevent stagnant overflow.\n\n`;
     } else if (matchedCropKey === 'chilli') {
-      response += `*Chilli Spraying Advisory:* Postpone insecticide sprays if strong winds or showers are imminent.\n\n`;
+      response += `🧪 *Chilli Spraying Advisory:* Postpone insecticide sprays if strong winds or showers are imminent.\n\n`;
     }
 
     response += `Are you experiencing heavy rainfall or dry soil blocks in your fields currently, and have you scheduled any sowing or transplanting this week?`;
@@ -623,13 +627,15 @@ function fallbackFarmBotReply(userQuestion, defaultDistrict = 'Guntur') {
       const nativePest = PEST_SURVEILLANCE_DATABASE.find(p => p.district.toLowerCase() === activeDistrict.toLowerCase()) || PEST_SURVEILLANCE_DATABASE[PEST_SURVEILLANCE_DATABASE.length - 1];
       const otherPests = PEST_SURVEILLANCE_DATABASE.filter(p => p.district.toLowerCase() !== activeDistrict.toLowerCase()).slice(0, 2);
       
-      let response = `In **${activeDistrict} District**, the most critical active pest surveillance threat right now is **${nativePest.name}** (**${nativePest.scientific}**) affecting **${nativePest.crop}** crops.\n`;
-      response += `**Symptom Alert:** ${nativePest.desc}\n`;
-      response += `**Recommended Treatment:** ${nativePest.advice}\n\n`;
+      let response = `🐛 **Active Pest Surveillance in ${activeDistrict} District:**\n\n`;
+      response += `⚠️ **Pest:** **${nativePest.name}** (*${nativePest.scientific}*)\n`;
+      response += `🌾 **Crop Affected:** ${nativePest.crop}\n`;
+      response += `🛑 **Symptom Alert:** ${nativePest.desc}\n`;
+      response += `🛡️ **Recommended Action:** ${nativePest.advice}\n\n`;
       
       response += `Other notable crop threats under surveillance in the region include:\n`;
       otherPests.forEach(p => {
-        response += `- **${p.name}** on **${p.crop}** (${p.severity.toUpperCase()} severity threat)\n`;
+        response += `* **${p.name}** on **${p.crop}** (${p.severity.toUpperCase()} severity threat)\n`;
       });
       response += `\n`;
       
@@ -692,11 +698,13 @@ function fallbackFarmBotReply(userQuestion, defaultDistrict = 'Guntur') {
     }
 
     if (diagnosis) {
-      let response = `Your query indicates a potential **${diagnosis.pest}** issue on your ${matchedCropName}.\n\n`;
-      response += `**Symptoms:** ${diagnosis.symptoms}\n\n`;
-      response += `**Recommended Treatment and Control Plan:**\n`;
+      let response = `🔍 **FarmBot Diagnostic Report:**\n\n`;
+      response += `* 🌾 **Crop Affected:** ${matchedCropName}\n`;
+      response += `* 🐛 **Potential Threat:** **${diagnosis.pest}**\n`;
+      response += `* 🛑 **Symptoms Observed:** ${diagnosis.symptoms}\n\n`;
+      response += `🛡️ **Step-by-Step Treatment & Control Plan:**\n`;
       diagnosis.remedies.forEach((rem, idx) => {
-        response += `${idx + 1}. ${rem}\n`;
+        response += `${idx + 1}. ✅ ${rem}\n`;
       });
       response += `\n`;
 
@@ -718,48 +726,171 @@ function fallbackFarmBotReply(userQuestion, defaultDistrict = 'Guntur') {
   // 6. Fertilizer / Soil Health intent check
   const isFertilizerQuery = containsAny(fertilizerKeywords);
   if (isFertilizerQuery) {
-    let response = `Here is the fertilizer application guideline for **${matchedCropName}** in ${activeDistrict} district:\n`;
+    let response = `🧪 **NPK Fertilizer Split Guideline for ${matchedCropName} in ${activeDistrict} District:**\n\n`;
     if (matchedCropKey === 'paddy') {
-      response += `- **Recommended NPK Dosage:** 120:60:60 kg/ha.\n`;
-      response += `- **Application Schedule:** Apply Phosphorous (DAP) entirely as a basal dose. Split Nitrogen (Urea) and Potassium (MOP) into three equal splits (Basal, Tillering, and Panicle Initiation stages).\n`;
+      response += `* 📊 **Recommended NPK Dosage:** 120:60:60 kg/ha.\n`;
+      response += `* 📅 **Application Schedule:** Apply Phosphorous (DAP) entirely as a basal dose. Split Nitrogen (Urea) and Potassium (MOP) into three equal splits (Basal, Tillering, and Panicle Initiation stages).\n`;
     } else if (matchedCropKey === 'cotton') {
-      response += `- **Recommended NPK Dosage:** 90:45:45 kg/ha.\n`;
-      response += `- **Application Schedule:** Apply Urea in 3 split doses at 30, 60, and 90 days after sowing. Mix Urea with Neem Cake powder (5:1 ratio) to slow down nitrogen release and improve absorption.\n`;
+      response += `* 📊 **Recommended NPK Dosage:** 90:45:45 kg/ha.\n`;
+      response += `* 📅 **Application Schedule:** Apply Urea in 3 split doses at 30, 60, and 90 days after sowing. Mix Urea with Neem Cake powder (5:1 ratio) to slow down nitrogen release and improve absorption.\n`;
     } else if (matchedCropKey === 'chilli') {
-      response += `- **Recommended NPK Dosage:** 150:60:60 kg/ha.\n`;
-      response += `- **Application Schedule:** Apply organic farmyard manure (FYM) @ 10 tonnes/acre. Split chemical nitrogenous doses to encourage vegetative flushes and flowering.\n`;
+      response += `* 📊 **Recommended NPK Dosage:** 150:60:60 kg/ha.\n`;
+      response += `* 📅 **Application Schedule:** Apply organic farmyard manure (FYM) @ 10 tonnes/acre. Split chemical nitrogenous doses to encourage vegetative flushes and flowering.\n`;
     } else {
-      response += `- **Guideline:** Base your application on a recent soil health card test. Standard NPK dosages should be split to match crop growth cycles.\n`;
+      response += `* 📊 **Guideline:** Base your application on a recent soil health card test. Standard NPK dosages should be split to match crop growth cycles.\n`;
     }
-    response += `\n**Important:** Visit your nearest Rythu Bharosa Kendra (RBK) to check for subsidized bio-fertilizers and soil health testing kits.\n\n`;
+    response += `\n⚠️ **Important:** Visit your nearest Rythu Bharosa Kendra (RBK) to check for subsidized bio-fertilizers and soil health testing kits.\n\n`;
     response += `Have you conducted a soil test for your field recently, and are you planning organic or chemical fertilization?`;
     return response;
   }
 
   // 7. General crop advice / follow-up (no specific intent found)
   if (matchedCropKey === 'paddy') {
-    return `Paddy (Rice) fields in ${activeDistrict} need careful water management. Maintain a shallow water level of 2-5 cm during the tillering phase. Watch out for pests like Yellow Stem Borer.\n\nAre you cultivating fine grain varieties like Sona Masuri, and have you noticed any "dead hearts" or white panicles in your fields?`;
+    return `🌾 **Paddy (Rice) General Advisory for ${activeDistrict}:**\n\n* 💧 **Water Management:** Maintain a shallow water level of 2-5 cm during the tillering phase.\n* 🐛 **Pest Surveillance:** Watch out for pests like Yellow Stem Borer.\n\nAre you cultivating fine grain varieties like Sona Masuri, and have you noticed any "dead hearts" or white panicles in your fields?`;
   }
   if (matchedCropKey === 'cotton') {
-    return `Cotton crops require well-drained loamy soils. Check regularly for sucking pests (Aphids, Jassids, Whiteflies) and install yellow sticky traps (10 per acre).\n\nWhat is the current stage of your cotton crop, and are you noticing any leaf reddening or drying on the lower branches?`;
+    return `🌾 **Cotton General Advisory for ${activeDistrict}:**\n\n* 🌱 **Soil Conditions:** Cotton requires well-drained loamy soils.\n* 🐛 **Pest Alert:** Check regularly for sucking pests (Aphids, Jassids, Whiteflies) and install yellow sticky traps (10 per acre).\n\nWhat is the current stage of your cotton crop, and are you noticing any leaf reddening or drying on the lower branches?`;
   }
   if (matchedCropKey === 'chilli') {
-    return `Chilli crops thrive in well-aerated soils. Watch out for powdery mildew and Black Chilli Thrips. Ensure balanced irrigation to avoid root rot issues.\n\nIs your crop in the flowering stage, and are you noticing any leaf curling or sudden flower drops?`;
+    return `🌾 **Chilli General Advisory for ${activeDistrict}:**\n\n* 🌦️ **Air circulation:** Chilli crops thrive in well-aerated soils.\n* 🐛 **Pest Alert:** Watch out for powdery mildew and Black Chilli Thrips. Ensure balanced irrigation to avoid root rot issues.\n\nIs your crop in the flowering stage, and are you noticing any leaf curling or sudden flower drops?`;
   }
   if (matchedCropKey === 'tomato') {
-    return `Tomato crops require staked support for high yields. Watch for early blight spots and whiteflies. Keep field bunds clear of weeds.\n\nAre you cultivating determinate or indeterminate hybrids, and are your leaves showing upward curling or yellowing?`;
+    return `🌾 **Tomato General Advisory for ${activeDistrict}:**\n\n* 🪵 **Staking:** Tomato crops require staked support for high yields.\n* 🐛 **Pest Alert:** Watch for early blight spots and whiteflies. Keep field bunds clear of weeds.\n\nAre you cultivating determinate or indeterminate hybrids, and are your leaves showing upward curling or yellowing?`;
   }
   if (matchedCropKey === 'groundnut') {
-    return `Groundnut crops need gypsum application (200 kg/acre) at the pegging stage to ensure proper pod filling and seed size.\n\nHow many days has it been since sowing, and have you noticed any leaf spots (Tikka) or leaf miner caterpillars?`;
+    return `🌾 **Groundnut General Advisory for ${activeDistrict}:**\n\n* 🧪 **Nutrient Application:** Groundnut crops need gypsum application (200 kg/acre) at the pegging stage to ensure proper pod filling and seed size.\n\nHow many days has it been since sowing, and have you noticed any leaf spots (Tikka) or leaf miner caterpillars?`;
   }
 
-  return `I understand you are asking about agricultural practices in ${activeDistrict}. To give you the most accurate response, could you please specify the crop you are growing (e.g. Paddy, Cotton, Chillies, Tomato, Groundnut) and describe the symptoms or questions you have?\n\nAre you looking for mandi prices, weather forecasts, or pest controls?`;
+  return `🤖 **FarmBot Advisor:**\n\nI understand you are asking about agricultural practices in **${activeDistrict}**.\n\nTo give you the most accurate response, could you please specify:\n1. 🌾 **Crop Type** (e.g. Paddy, Cotton, Chillies, Tomato, Groundnut)\n2. 🛑 **Symptoms Observed** (e.g. leaf spots, curling, bore holes, drying stems)\n3. 📊 **Information Needed** (e.g. Mandi prices, weather alerts, pest controls)`;
+}
+
+function addTranslationsToDiagnosis(diag) {
+  if (!diag) return diag;
+  if (diag.translations) return diag;
+
+  const crop = (diag.crop_name || '').toLowerCase();
+  const disease = (diag.diagnosis || '').toLowerCase();
+
+  let teCrop = diag.crop_name || 'పంట';
+  let hiCrop = diag.crop_name || 'फ़सल';
+  let teDiag = diag.diagnosis || 'వ్యాధి నిర్ధారణ కాలేదు';
+  let hiDiag = diag.diagnosis || 'निदान नहीं हुआ';
+  let teSymptoms = diag.symptoms || 'ఆకులపై మచ్చలు గమనించబడ్డాయి.';
+  let hiSymptoms = diag.symptoms || 'पत्तियों पर धब्बे देखे गए हैं।';
+  let teRemedies = diag.remedies || [];
+  let hiRemedies = diag.remedies || [];
+
+  if (crop.includes('paddy') || crop.includes('rice')) {
+    teCrop = "వరి (Paddy)";
+    hiCrop = "धान (Paddy)";
+  } else if (crop.includes('cotton')) {
+    teCrop = "పత్తి (Cotton)";
+    hiCrop = "कपास (Cotton)";
+  } else if (crop.includes('chilli')) {
+    teCrop = "మిరప (Chillies)";
+    hiCrop = "मिर्च (Chillies)";
+  } else if (crop.includes('tomato')) {
+    teCrop = "టమోటా (Tomato)";
+    hiCrop = "टमाटर (Tomato)";
+  } else if (crop.includes('mango')) {
+    teCrop = "మామిడి (Mangoes)";
+    hiCrop = "आम (Mangoes)";
+  } else if (crop.includes('groundnut')) {
+    teCrop = "వేరుశనగ (Groundnut)";
+    hiCrop = "मूंगफली (Groundnut)";
+  }
+
+  if (disease.includes('blast') || disease.includes('fungal')) {
+    teDiag = "ఆకు మచ్చ తెగులు (Leaf Blast)";
+    hiDiag = "लीफ ब्लास्ट (Leaf Blast)";
+    teSymptoms = "ఆకులపై చిన్న ఓవల్ ఆకారపు గోధుమ రంగు మచ్చలు ఏర్పడతాయి.";
+    hiSymptoms = "पत्तियों पर छोटे अंडाकार भूरे रंग के धब्बे बन जाते हैं।";
+    teRemedies = [
+      "లీటరు నీటికి 0.6 గ్రా చొప్పున ట్రైసైక్లాజోల్ 75% WP పిచికారీ చేయండి.",
+      "నత్రజని ఎరువుల అధిక వినియోగాన్ని నివారించండి.",
+      "పొలంలో నిలిచి ఉన్న నీటిని వెంటనే తొలగించండి."
+    ];
+    hiRemedies = [
+      "ट्राइसाइक्लाजोल 75% डब्ल्यूपी 0.6 ग्राम प्रति लीटर पानी का छिड़काव करें।",
+      "नाइट्रोजन उर्वरकों के अत्यधिक उपयोग से बचें।",
+      "खेत में रुके हुए पानी की निकासी सुनिश्चित करें।"
+    ];
+  } else if (disease.includes('bollworm') || disease.includes('worm')) {
+    teDiag = "గులాబీ రంగు పురుగు (Pink Bollworm)";
+    hiDiag = "गुलाबी सुंडी (Pink Bollworm)";
+    teSymptoms = "కాయలపై రంధ్రాలు పడతాయి మరియు పువ్వులు సరిగ్గా వికసించవు.";
+    hiSymptoms = "कपास के फूलों और गूलरों में सूराख दिखाई देते हैं।";
+    teRemedies = [
+      "పూత దశలో లీటరు నీటికి 2 మి.లీ నింబెసిడిన్ పిచికారీ చేయండి.",
+      "ఎకరాకు 5 లింగాకర్షక బుట్టలు (Pheromone traps) అమర్చండి.",
+      "పంట వ్యర్థాలను నాశనం చేయండి."
+    ];
+    hiRemedies = [
+      "फूल आने पर 2 मिलीलीटर प्रति लीटर नीम के तेल का छिड़काव करें।",
+      "प्रति एकड़ 5 फेरोमोन ट्रैप लगाएं।",
+      "फसली अवशेषों को नष्ट करें।"
+    ];
+  } else if (disease.includes('thrips')) {
+    teDiag = "తామర పురుగులు (Thrips)";
+    hiDiag = "थ्रिप्स कीट (Thrips)";
+    teSymptoms = "ఆకులు పైకి ముడుచుకుపోతాయి మరియు నల్లని మచ్చలు ఏర్పడతాయి.";
+    hiSymptoms = "पत्तियां ऊपर की ओर मुड़ जाती हैं और पीली पड़ जाती हैं।";
+    teRemedies = [
+      "లీటరు నీటికి 0.3 మి.లీ చొప్పున ఫిప్రోనిల్ 5% SC పిచికారీ చేయండి.",
+      "ఎకరాకు 10 నీలి జిగురు అట్టలు అమర్చండి.",
+      "మొక్కలపై నీటిని చల్లడం ద్వారా పురుగుల ఉధృతిని తగ్గించండి."
+    ];
+    hiRemedies = [
+      "फिप्रोनील 5% एससी 0.3 मिली प्रति लीटर पानी का छिड़काव करें।",
+      "प्रति एकड़ 10 नीले चिपचिपे कार्ड लगाएं।",
+      "खेत में नमी बनाए रखें।"
+    ];
+  } else if (disease.includes('healthy')) {
+    teDiag = "ఆరోగ్యకరమైన పంట (Healthy)";
+    hiDiag = "स्वस्थ फसल (Healthy)";
+    teSymptoms = "ఆకులలో ఎటువంటి వ్యాధి లేదా కీటకాల సంకేతాలు లేవు. ఆకులు పచ్చగా ఆరోగ్యంగా ఉన్నాయి.";
+    hiSymptoms = "पत्तियों पर किसी भी बीमारी या कीट के लक्षण नहीं हैं। फसल स्वस्थ है।";
+    teRemedies = [
+      "సేంద్రీయ ఎరువులను తగినంత మోతాదులో వాడండి.",
+      "సకాలంలో నీటి పారుదల మరియు కలుపు నివారణ చర్యలు చేపట్టండి.",
+      "పంటను నిరంతరం గమనిస్తూ ఉండండి."
+    ];
+    hiRemedies = [
+      "जैविक खादों का सही मात्रा में प्रयोग करें।",
+      "समय पर सिंचाई और खरपतवार नियंत्रण करें।",
+      "नियमित रूप से फसल की निगरानी करते रहें।"
+    ];
+  } else {
+    teDiag = `${diag.diagnosis} (నిర్ధారణ)`;
+    hiDiag = `${diag.diagnosis} (निदान)`;
+    teSymptoms = diag.symptoms ? `లక్షణాలు: ${diag.symptoms}` : '';
+    hiSymptoms = diag.symptoms ? `लक्षण: ${diag.symptoms}` : '';
+    teRemedies = (diag.remedies || []).map(r => `నివారణ: ${r}`);
+    hiRemedies = (diag.remedies || []).map(r => `उपचार: ${r}`);
+  }
+
+  diag.translations = {
+    te: {
+      crop_name: teCrop,
+      diagnosis: teDiag,
+      symptoms: teSymptoms,
+      remedies: teRemedies
+    },
+    hi: {
+      crop_name: hiCrop,
+      diagnosis: hiDiag,
+      symptoms: hiSymptoms,
+      remedies: hiRemedies
+    }
+  };
+
+  return diag;
 }
 
 export async function analyzeCropImage(imageUrl, base64Data, mimeType, cropNameHint = '', description = '') {
   try {
     const prompt = `
-      You are the AgriConnect AI Agronomist system. Analyze the provided image of a crop leaf or plant.
+      You are the FarmWise AI Agronomist system. Analyze the provided image of a crop leaf or plant.
       ${cropNameHint ? `The farmer identified this crop as: ${cropNameHint}.` : ''}
       ${description ? `The farmer described these symptoms or context: "${description}".` : ''}
 
@@ -775,16 +906,40 @@ export async function analyzeCropImage(imageUrl, base64Data, mimeType, cropNameH
           "Fungicide/pesticide dosage details",
           "Organic/cultural controls (e.g. Neem seed oil, water drainage)",
           "Preventative farm practices"
-        ]
+        ],
+        "translations": {
+          "te": {
+            "crop_name": "Telugu translation of crop name (e.g., వరి)",
+            "diagnosis": "Telugu translation of disease name (keep English name in parentheses, e.g., ఆకు తెగులు (Leaf Blast))",
+            "symptoms": "Telugu translation of symptoms description",
+            "remedies": [
+              "Telugu translation of remedy 1",
+              "Telugu translation of remedy 2",
+              "Telugu translation of remedy 3"
+            ]
+          },
+          "hi": {
+            "crop_name": "Hindi translation of crop name (e.g., धान)",
+            "diagnosis": "Hindi translation of disease name (keep English name in parentheses, e.g., लीफ ब्लास्ट (Leaf Blast))",
+            "symptoms": "Hindi translation of symptoms description",
+            "remedies": [
+              "Hindi translation of remedy 1",
+              "Hindi translation of remedy 2",
+              "Hindi translation of remedy 3"
+            ]
+          }
+        }
       }
     `;
 
     const responseText = await callGeminiRest(prompt, base64Data, mimeType, "application/json");
     const cleanText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-    return JSON.parse(cleanText);
+    const result = JSON.parse(cleanText);
+    return addTranslationsToDiagnosis(result);
   } catch (error) {
     console.error('Error during Gemini API analysis:', error);
-    return getFallbackDiagnosis(cropNameHint, description);
+    const fallback = getFallbackDiagnosis(cropNameHint, description);
+    return addTranslationsToDiagnosis(fallback);
   }
 }
 
@@ -831,7 +986,14 @@ export async function processAgentPrompt(promptText) {
   }
 }
 
-// Generate FarmBot responses directly using the REST helper
+export function stripEmojis(str) {
+  if (!str) return str;
+  return str
+    .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2300}-\u{23FF}]/gu, '')
+    .replace(/  +/g, ' ')
+    .trim();
+}
+
 export async function generateFarmBotReply(chatContext, userQuestion, defaultDistrict = 'Guntur', language = 'en') {
   try {
     const systemInstruction = `
@@ -841,9 +1003,13 @@ export async function generateFarmBotReply(chatContext, userQuestion, defaultDis
       CRITICAL RULE: You must ONLY answer questions related to agriculture, farming, crops, soil health, weather, pests, livestock, irrigation, fertilizers, and Mandi market prices. 
       If the user's question is NOT about farming or agriculture, you must politely decline to answer, stating that you are an AI dedicated solely to assisting farmers, and ask them a farming-related question instead.
 
+      FORMATTING RULE: Present your recommendations and treatment steps in a highly structured, point-wise, and easy-to-understand manner. Use numbered lists (e.g. 1., 2., 3.) when explaining action steps, solutions, remedies, or instructions.
+      VISUAL RULE: Add relevant visual emojis (e.g. 🌾 for crops, 🤖 for FarmBot, 🐛 for pests/diseases, 💧 for water/irrigation, 🧪 for chemicals/fertilizers, 🛑 for warnings, 📈 for market prices, 🌦️ for weather, 🔍 for questions) to make the text engaging, scannable, and readable on screen.
+      STYLE: Use simple, plain, layman terms. Break down complex scientific terms. Keep descriptions clear and easy to follow with clean paragraph spacing.
+
       Your answers must be highly dynamic and tailored to the farmer's queries. Avoid generic templates.
       If the user explains a symptom or situation briefly, provide relevant, practical advice (organic and chemical remedies where appropriate) and ALWAYS ask at least one relevant, clarifying follow-up question to learn more about their field conditions (e.g. crop age, soil type, leaf symptom details).
-      Keep your response to 2-3 concise paragraphs.
+      Keep your response to 2-3 concise paragraphs with clean spacing.
 
       Respond to the user in their selected language: ${language === 'te' ? 'Telugu' : language === 'hi' ? 'Hindi' : 'English'}. If they selected Telugu or Hindi, write your entire response using the appropriate native script (Telugu script for Telugu, Devanagari script for Hindi) so it is perfectly readable.
     `;

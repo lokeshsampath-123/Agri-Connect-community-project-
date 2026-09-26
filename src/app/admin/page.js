@@ -10,75 +10,135 @@ export default function Admin() {
   const [inputMessage, setInputMessage] = useState('');
   const [isSendingMessage, setIsSendingMessage] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [sessionId, setSessionId] = useState('');
   
   const chatEndRef = useRef(null);
   const recognitionRef = useRef(null);
 
-  // Generate a fixed session ID for FarmBot chat
-  const sessionId = 'farmbot_admin_session';
-
-  // Initialize Speech Recognition API
-  useEffect(() => {
+  const getPlaceholder = () => {
+    let userLanguage = 'en';
     if (typeof window !== 'undefined') {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (SpeechRecognition) {
-        const rec = new SpeechRecognition();
-        rec.continuous = false;
-        rec.interimResults = false;
-        rec.lang = 'en-IN'; // Optimized for Indian English accents
-
-        rec.onstart = () => {
-          setIsListening(true);
-        };
-
-        rec.onresult = (event) => {
-          const transcript = event.results[0][0].transcript;
-          setInputMessage((prev) => prev ? prev + ' ' + transcript : transcript);
-        };
-
-        rec.onerror = (event) => {
-          console.error('Speech recognition error:', event.error);
-          setIsListening(false);
-        };
-
-        rec.onend = () => {
-          setIsListening(false);
-        };
-
-        recognitionRef.current = rec;
+      const session = localStorage.getItem('user_profile');
+      if (session) {
+        try {
+          const profile = JSON.parse(session);
+          userLanguage = profile.language || 'en';
+        } catch (e) {}
       }
     }
-  }, []);
 
+    if (isListening) {
+      if (userLanguage === 'te') return 'వినబడుతోంది, మాట్లాడండి...';
+      if (userLanguage === 'hi') return 'सुन रहा हूँ, कृपया बोलें...';
+      return 'Listening to your voice...';
+    } else {
+      if (userLanguage === 'te') return 'పురుగుమందులు, తెగుళ్లు, ధరల గురించి అడగండి...';
+      if (userLanguage === 'hi') return 'कीटनाशकों, कीटों, मंडी दरों के बारे में पूछें...';
+      return 'Ask FarmBot about pesticides, biological controls, pricing...';
+    }
+  };
+
+  // Dynamic speech input handler with fresh configurations on demand
   const toggleListening = () => {
-    if (!recognitionRef.current) {
+    if (typeof window === 'undefined') return;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
       alert('Speech recognition is not supported in this browser. Please try Google Chrome or Microsoft Edge.');
       return;
     }
 
     if (isListening) {
-      recognitionRef.current.stop();
-    } else {
-      recognitionRef.current.start();
-    }
-  };
-
-  // Load chat messages
-  const loadChat = async () => {
-    try {
-      const response = await fetch(`/api/messages?session_id=${sessionId}`);
-      const data = await response.json();
-      if (Array.isArray(data)) {
-        setChatMessages(data);
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
       }
-    } catch (err) {
-      console.error('Could not load chat messages:', err);
+      setIsListening(false);
+    } else {
+      let langCode = 'en-IN';
+      const session = localStorage.getItem('user_profile');
+      if (session) {
+        try {
+          const profile = JSON.parse(session);
+          if (profile.language === 'te') {
+            langCode = 'te-IN'; // Telugu (India)
+          } else if (profile.language === 'hi') {
+            langCode = 'hi-IN'; // Hindi (India)
+          }
+        } catch (e) {
+          console.warn('Failed to parse user language settings for speech recognition:', e);
+        }
+      }
+
+      const rec = new SpeechRecognition();
+      rec.continuous = false;
+      rec.interimResults = false;
+      rec.lang = langCode;
+
+      rec.onstart = () => {
+        setIsListening(true);
+      };
+
+      rec.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setInputMessage((prev) => prev ? prev + ' ' + transcript : transcript);
+      };
+
+      rec.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+      };
+
+      rec.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = rec;
+      console.log(`Starting speech recognition with language setting: ${langCode}`);
+      rec.start();
     }
   };
 
+  // Load user session ID on mount
   useEffect(() => {
-    loadChat();
+    const session = localStorage.getItem('user_profile');
+    if (session) {
+      try {
+        const parsed = JSON.parse(session);
+        if (parsed.email) {
+          const userSessionKey = `farmbot_${parsed.email.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+          setSessionId(userSessionKey);
+        }
+      } catch (err) {
+        console.error('Failed to parse user profile for session ID:', err);
+        setSessionId('farmbot_anonymous_session');
+      }
+    } else {
+      // Generate a random session ID for anonymous users and save it in sessionStorage
+      let anonSession = sessionStorage.getItem('farmbot_anon_session');
+      if (!anonSession) {
+        anonSession = `farmbot_anon_${Math.random().toString(36).substring(2, 11)}`;
+        sessionStorage.setItem('farmbot_anon_session', anonSession);
+      }
+      setSessionId(anonSession);
+    }
   }, []);
+
+  // Load chat messages when sessionId is available
+  useEffect(() => {
+    const loadChat = async () => {
+      if (!sessionId) return;
+      try {
+        const response = await fetch(`/api/messages?session_id=${sessionId}`);
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          setChatMessages(data);
+        }
+      } catch (err) {
+        console.error('Could not load chat messages:', err);
+      }
+    };
+
+    loadChat();
+  }, [sessionId]);
 
   useEffect(() => {
     // Scroll to bottom
@@ -241,7 +301,7 @@ export default function Admin() {
                     <input 
                       type="text" 
                       className="w-full bg-surface-container-low border border-outline-variant/80 rounded-2xl py-4 pl-4 pr-28 text-sm placeholder:text-outline/80 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all"
-                      placeholder={isListening ? "Listening to your voice..." : "Ask FarmBot about pesticides, biological controls, pricing..."}
+                      placeholder={getPlaceholder()}
                       value={inputMessage}
                       onChange={(e) => setInputMessage(e.target.value)}
                       disabled={isSendingMessage}

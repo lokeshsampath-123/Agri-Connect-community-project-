@@ -228,9 +228,18 @@ export default function ClimatePage() {
                         <span className="material-symbols-outlined text-[24px]">psychology</span>
                         <h3 className="font-display text-lg font-black">AI Agronomist advice</h3>
                       </div>
-                      <p className="text-xs text-white/80 leading-relaxed font-medium pt-2">
-                        {weatherData.advisory}
-                      </p>
+                      <div className="space-y-2.5 pt-2">
+                        {weatherData.advisory.split('\n').map((point, index) => {
+                          const cleanPoint = point.replace(/^-\s*/, '').trim();
+                          if (!cleanPoint) return null;
+                          return (
+                            <div key={index} className="flex items-start gap-2.5 text-xs text-white/95 leading-relaxed font-semibold">
+                              <span className="text-success-bright font-bold select-none mt-0.5">•</span>
+                              <span>{cleanPoint}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
 
                     <div className="pt-6 relative z-10">
