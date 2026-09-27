@@ -120,11 +120,11 @@ export default function Home() {
       : activeLang === 'hi'
       ? 'प्रारंभिक पहचान प्रणाली जो वास्तविक समय अपडेट का उपयोग करके कीट प्रवासन और प्रकोप का मानचित्रण करती है।'
       : 'Early detection systems that map pest migration patterns and district outbreaks using real-time agent updates.',
-    marketDesc: activeLang === 'te'
-      ? 'నిజ-సమయ మండి ధరలు మరియు విశ్లేషణలు మీ పంటను విక్రయించడానికి సరైన సమయం మరియు స్థానాన్ని నిర్ణయించడంలో సహాయపడతాయి.'
+    soilDesc: activeLang === 'te'
+      ? 'ఆంధ్రప్రదేశ్ మండలాల కోసం ప్రత్యేకం చేయబడిన ఏఐ ఆధారిత మట్టి ఆరోగ్య విశ్లేషణ మరియు ఎన్‌పికి కెమిస్ట్రీ నివేదిక.'
       : activeLang === 'hi'
-      ? 'लाइव मंडी कीमतें और विश्लेषण जो आपको अपनी उपज बेचने के लिए सही समय और स्थान चुनने में मदद करते।'
-      : 'Live Mandi prices and analytics helping you choose the perfect time and place to sell your yield.',
+      ? 'आंध्र प्रदेश मंडलों के लिए विशेष रूप से तैयार एआई-संचालित मिट्टी स्वास्थ्य विश्लेषण और एनपीके रसायन विज्ञान रिपोर्ट।'
+      : 'AI-driven soil health analysis, nutrient scoring, and NPK chemistry analytics tailored for AP Mandals.',
     agentDesc: activeLang === 'te'
       ? 'స్వయంప్రతిపత్త వ్యవసాయ శాస్త్రవేత్తల నవీకరణలను అనుకరించండి. డేటాబేస్ పుష్లను ప్రేరేపించడానికి ప్రాంప్ట్‌లను ఇన్‌పుట్ చేయండి.'
       : activeLang === 'hi'
@@ -365,17 +365,17 @@ export default function Home() {
               </p>
             </Link>
 
-            {/* Market Data */}
-            <Link href="/market" className="glass-panel-elevated p-8 rounded-[2.5rem] hover:bg-primary/5 hover:translate-y-[-8px] transition-all duration-500 group scroll-reveal block">
+            {/* Soil Overview */}
+            <Link href="/soil" className="glass-panel-elevated p-8 rounded-[2.5rem] hover:bg-primary/5 hover:translate-y-[-8px] transition-all duration-500 group scroll-reveal block">
               <div className="flex justify-between items-start mb-12">
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm">
-                  <span className="material-symbols-outlined text-2xl">trending_up</span>
+                  <span className="material-symbols-outlined text-2xl">landscape</span>
                 </div>
-                <span className="text-primary text-[9px] font-black uppercase tracking-widest px-4 py-1.5 bg-primary/10 rounded-full font-label">Fin-AI</span>
+                <span className="text-primary text-[9px] font-black uppercase tracking-widest px-4 py-1.5 bg-primary/10 rounded-full font-label">Soil-AI</span>
               </div>
-              <h3 className="text-xl font-black mb-4">{t.market}</h3>
+              <h3 className="text-xl font-black mb-4">{t.soil}</h3>
               <p className="text-on-surface-variant text-xs leading-relaxed font-medium">
-                {strings.marketDesc}
+                {strings.soilDesc}
               </p>
             </Link>
 
@@ -431,12 +431,6 @@ export default function Home() {
               <span className="text-2xl font-display font-black animate-gradient-flow">FarmWise</span>
             </div>
             <p className="text-sm font-medium opacity-70">{strings.footerDesc}</p>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-12 font-bold text-sm">
-            <a href="#" className="hover:text-primary transition-colors">{strings.privacy}</a>
-            <a href="#" className="hover:text-primary transition-colors">{strings.terms}</a>
-            <a href="#" className="hover:text-primary transition-colors">{strings.contact}</a>
           </div>
         </div>
       </footer>

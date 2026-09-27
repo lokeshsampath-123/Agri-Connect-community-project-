@@ -360,7 +360,7 @@ export default function Market() {
             >
               <span className="material-symbols-outlined text-[20px]">menu</span>
             </button>
-            <span className="font-headline text-lg font-bold text-primary">Market Insights</span>
+            <span className="font-headline text-lg font-bold text-primary">Mandi Market Prices</span>
             <div className="h-6 w-[1px] bg-outline-variant" />
             <div className="flex items-center text-on-surface gap-2 text-sm font-bold bg-surface-container-low px-4 py-1.5 rounded-full border border-outline-variant">
               <span className="material-symbols-outlined text-primary text-lg">location_on</span>
