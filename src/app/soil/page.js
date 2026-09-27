@@ -280,9 +280,9 @@ export default function SoilOverview() {
                   </div>
                 </div>
 
-                <div className="border-t border-emerald-100 pt-4">
-                  <h3 className="font-extrabold text-[#0f5132] text-base">{soilData.soilType}</h3>
-                  <p className="text-[10px] font-black text-emerald-700 uppercase tracking-wider mt-0.5">
+                <div className="border-t border-emerald-100 pt-4 min-w-0">
+                  <h3 className="font-extrabold text-[#0f5132] text-sm sm:text-base leading-snug break-words">{soilData.soilType}</h3>
+                  <p className="text-[10px] font-black text-emerald-700 uppercase tracking-wider mt-0.5 break-words">
                     📍 {selectedMandal.toUpperCase()} MANDAL
                   </p>
                 </div>

@@ -453,11 +453,13 @@ export default function Dashboard() {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 
                 {/* Circular Soil Gauge & Location Card */}
-                <div className="col-span-12 lg:col-span-4 glass-card rounded-[2.5rem] p-6 border border-outline-variant/60 flex flex-col justify-between items-center text-center">
-                  <div className="space-y-2">
+                <div className="col-span-12 lg:col-span-4 glass-card rounded-[2.5rem] p-6 border border-outline-variant/60 flex flex-col justify-between items-center text-center min-w-0">
+                  <div className="space-y-2 w-full max-w-full min-w-0 flex flex-col items-center">
                     <span className="text-[10px] font-black text-primary uppercase tracking-widest font-label">Soil Quality Score</span>
-                    <h4 className="font-headline font-black text-on-surface text-base truncate">{soilData.soilType}</h4>
-                    <p className="text-[9px] text-on-surface-variant font-bold uppercase tracking-wider">
+                    <h4 className="font-headline font-black text-on-surface text-sm sm:text-base leading-snug break-words max-w-full text-center px-2 text-balance">
+                      {soilData.soilType}
+                    </h4>
+                    <p className="text-[9px] text-on-surface-variant font-bold uppercase tracking-wider text-center break-words max-w-full">
                       📍 {(profile.village || 'Tenali').replace(/\s*mandal\s*/gi, '').trim().toUpperCase()} MANDAL, {profile.district}
                     </p>
                   </div>
