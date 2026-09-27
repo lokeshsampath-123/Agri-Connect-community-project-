@@ -435,12 +435,12 @@ export default function Dashboard() {
             </section>
           </ErrorBoundary>
 
-          {/* Real-Time Soil Health Monitor */}
+          {/* Predictive Soil Health Report */}
           <section className="space-y-4">
             <div className="flex items-center gap-3">
               <span className="material-symbols-outlined text-primary text-2xl">landscape</span>
               <h3 className="font-display text-2xl font-black text-on-surface">
-                {t.soilHealthMonitor || 'Real-Time Soil Health Monitor'}
+                {t.soilHealthMonitor || 'Predictive Soil Health Report'}
               </h3>
             </div>
 

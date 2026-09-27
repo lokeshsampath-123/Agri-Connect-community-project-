@@ -227,7 +227,7 @@ export default function SoilOverview() {
           {loading && !soilData ? (
             <div className="min-h-[400px] flex flex-col items-center justify-center space-y-3">
               <div className="w-10 h-10 rounded-full border-4 border-[#0f5132] border-t-transparent animate-spin" />
-              <p className="text-xs font-bold text-[#0f5132] animate-pulse">Fetching Real-Time Soil Health Metrics...</p>
+              <p className="text-xs font-bold text-[#0f5132] animate-pulse">Running Predictive Soil Health Analysis...</p>
             </div>
           ) : soilData ? (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
