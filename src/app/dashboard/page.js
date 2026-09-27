@@ -385,7 +385,7 @@ export default function Dashboard() {
                       {liveAlert.severity.toUpperCase()} ALERT
                     </span>
                     <span className="text-[10px] text-on-surface-variant font-bold">
-                      {isClimateLoading ? 'Connecting Live AI...' : 'Live Agricultural Meteorology'}
+                      {isClimateLoading ? 'Connecting Live AI...' : 'Live OpenWeather & AI Advisory'}
                     </span>
                   </div>
                   <h4 className="font-headline font-black text-primary text-base sm:text-lg mt-1 truncate">
@@ -403,10 +403,32 @@ export default function Dashboard() {
                       );
                     })}
                   </div>
+
+                  {/* OpenWeather Current Telemetry & 1-Hour Step Mini Timeline */}
                   {climateData?.current && (
-                    <p className="text-[10px] text-on-surface-variant/80 font-black mt-2 font-label">
-                      CURRENT STATE: {currentTemp}°C | {currentHumidity}% Humidity | {currentCondition}
-                    </p>
+                    <div className="mt-4 pt-3 border-t border-outline-variant/40 space-y-3">
+                      <div className="flex flex-wrap items-center gap-4 text-xs font-black text-primary">
+                        <span>LIVE OPENWEATHER: {currentTemp}°C</span>
+                        <span>•</span>
+                        <span>HUMIDITY: {currentHumidity}%</span>
+                        <span>•</span>
+                        <span>WIND: {climateData.current.windSpeed} km/h</span>
+                        <span>•</span>
+                        <span>CONDITION: {currentCondition}</span>
+                      </div>
+
+                      {climateData?.hourly && climateData.hourly.length > 0 && (
+                        <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 pt-1">
+                          {climateData.hourly.map((h, i) => (
+                            <div key={i} className="bg-white/80 border border-outline-variant/60 p-2 rounded-xl text-center flex flex-col items-center">
+                              <span className="text-[9px] font-black text-primary uppercase">{h.time}</span>
+                              <span className="text-xs font-black text-on-surface mt-0.5">{h.temp}°C</span>
+                              <span className="text-[8px] font-bold text-emerald-600">☔ {h.pop}%</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>

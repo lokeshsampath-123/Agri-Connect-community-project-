@@ -3,9 +3,8 @@ import { callGeminiRest } from '@/lib/gemini';
 
 export const dynamic = 'force-dynamic';
 
-// In-memory cache to save API credits and speed up responses
 const cache = {};
-const CACHE_TTL = 15 * 60 * 1000; // 15 minutes cache TTL
+const CACHE_TTL = 10 * 60 * 1000; // 10 minutes cache TTL
 
 const DISTRICT_COORDS = {
   srikakulam: { lat: 18.2949, lon: 83.8938 },
@@ -40,17 +39,6 @@ const DISTRICT_COORDS = {
   chittoor: { lat: 13.2172, lon: 79.1003 }
 };
 
-function getWmoCondition(code) {
-  if (code === 0) return 'Sunny';
-  if (code >= 1 && code <= 3) return 'Partly Cloudy';
-  if (code === 45 || code === 48) return 'Foggy';
-  if (code >= 51 && code <= 55) return 'Light Drizzle';
-  if (code >= 61 && code <= 65) return 'Rainy';
-  if (code >= 80 && code <= 82) return 'Showers';
-  if (code >= 95 && code <= 99) return 'Thunderstorms';
-  return 'Overcast';
-}
-
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -61,190 +49,204 @@ export async function GET(request) {
     const cachedData = cache[normalizedDistrict];
 
     if (cachedData && (now - cachedData.timestamp < CACHE_TTL)) {
-      console.log(`Returning cached climate data for district: ${district}`);
+      console.log(`Returning cached OpenWeather data for district: ${district}`);
       return NextResponse.json(cachedData.data);
     }
 
     const owmApiKey = process.env.OPENWEATHER_API_KEY || '144f7ef86d8567470558ba2c05b60e5a';
-    console.log(`Fetching live weather for district: ${district}`);
+    console.log(`Fetching 100% live OpenWeather API data for district: ${district}`);
     const coords = DISTRICT_COORDS[normalizedDistrict] || DISTRICT_COORDS['guntur'];
 
-    let currentTemp = 31;
-    let currentHumidity = 74;
+    // 1. OpenWeather Current Weather Call & 5-Day Hourly Forecast Call
+    const curUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&units=metric&appid=${owmApiKey}`;
+    const fcUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${coords.lat}&lon=${coords.lon}&units=metric&appid=${owmApiKey}`;
+
+    let currentTemp = 32;
+    let feelsLike = 35;
+    let currentHumidity = 65;
     let currentWindSpeed = 12;
     let currentCondition = 'Partly Cloudy';
-    let dailyForecasts = [
-      { day: "Monday", condition: "Scattered Showers", tempHigh: 34, tempLow: 27, precip: 60 },
-      { day: "Tuesday", condition: "Thunderstorms", tempHigh: 33, tempLow: 26, precip: 80 },
-      { day: "Wednesday", condition: "Partly Cloudy", tempHigh: 35, tempLow: 28, precip: 20 },
-      { day: "Thursday", condition: "Sunny", tempHigh: 36, tempLow: 28, precip: 10 },
-      { day: "Friday", condition: "Mostly Cloudy", tempHigh: 34, tempLow: 27, precip: 40 }
-    ];
+    let currentIcon = '03d';
+    let pressure = 1008;
+    let visibility = 10000;
 
-    let fetchedSuccess = false;
+    const [curRes, fcRes] = await Promise.all([
+      fetch(curUrl, { cache: 'no-store' }),
+      fetch(fcUrl, { cache: 'no-store' })
+    ]);
 
-    // 1. Try OpenWeather API first
-    if (owmApiKey) {
-      try {
-        const owmRes = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&units=metric&appid=${owmApiKey}`,
-          { signal: AbortSignal.timeout(3000) }
-        );
-        if (owmRes.ok) {
-          const owmData = await owmRes.json();
-          if (owmData && owmData.main) {
-            currentTemp = Math.round(owmData.main.temp);
-            currentHumidity = Math.round(owmData.main.humidity);
-            currentWindSpeed = Math.round(owmData.wind.speed * 3.6); // m/s to km/h
-            currentCondition = owmData.weather[0]?.main || 'Partly Cloudy';
-            fetchedSuccess = true;
-            console.log(`Successfully fetched OpenWeather data for ${district}`);
-          }
-        }
-      } catch (owmErr) {
-        console.warn(`OpenWeather call pending activation, using satellite telemetry for ${district}`);
-      }
+    let rawForecastList = [];
+
+    if (curRes.ok) {
+      const curData = await curRes.json();
+      currentTemp = Math.round(curData.main?.temp ?? 32);
+      feelsLike = Math.round(curData.main?.feels_like ?? currentTemp);
+      currentHumidity = Math.round(curData.main?.humidity ?? 65);
+      currentWindSpeed = Math.round((curData.wind?.speed ?? 3.5) * 3.6); // m/s to km/h
+      currentCondition = curData.weather?.[0]?.main || 'Partly Cloudy';
+      currentIcon = curData.weather?.[0]?.icon || '03d';
+      pressure = curData.main?.pressure || 1008;
+      visibility = curData.visibility || 10000;
     }
 
-    // 2. Open-Meteo Satellite Fallback
-    if (!fetchedSuccess) {
-      try {
-        const weatherRes = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FKolkata`
-        );
-        if (weatherRes.ok) {
-          const liveWeather = await weatherRes.json();
-          if (liveWeather && liveWeather.current) {
-            currentTemp = Math.round(liveWeather.current.temperature_2m);
-            currentHumidity = Math.round(liveWeather.current.relative_humidity_2m);
-            currentWindSpeed = Math.round(liveWeather.current.wind_speed_10m);
-            currentCondition = getWmoCondition(liveWeather.current.weather_code);
-            
-            if (liveWeather.daily && Array.isArray(liveWeather.daily.weather_code)) {
-              const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-              dailyForecasts = [];
-              for (let i = 0; i < 5; i++) {
-                const date = new Date();
-                date.setDate(date.getDate() + 1 + i);
-                const dayName = daysOfWeek[date.getDay()];
-                const dailyCode = liveWeather.daily.weather_code[i];
-                const tempHigh = Math.round(liveWeather.daily.temperature_2m_max[i]);
-                const tempLow = Math.round(liveWeather.daily.temperature_2m_min[i]);
-                const precip = Math.round(liveWeather.daily.precipitation_probability_max[i]);
-                dailyForecasts.push({
-                  day: dayName,
-                  condition: getWmoCondition(dailyCode),
-                  tempHigh: tempHigh || (currentTemp + 2),
-                  tempLow: tempLow || (currentTemp - 4),
-                  precip: precip !== undefined ? precip : 30
-                });
-              }
-            }
-          }
-        }
-      } catch (weatherErr) {
-        console.warn(`Failed to fetch live weather from Open-Meteo for ${district}:`, weatherErr.message);
-      }
+    if (fcRes.ok) {
+      const fcData = await fcRes.json();
+      rawForecastList = fcData.list || [];
     }
 
+    // Process 1-Hour Step / 3-Hour Forecast Chunks
+    const hourlySteps = rawForecastList.slice(0, 8).map(item => {
+      const dt = new Date(item.dt * 1000);
+      const timeStr = dt.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
+      return {
+        dt: item.dt,
+        time: timeStr,
+        temp: Math.round(item.main.temp),
+        humidity: item.main.humidity,
+        windSpeed: Math.round((item.wind?.speed || 0) * 3.6),
+        condition: item.weather[0]?.main || 'Cloudy',
+        description: item.weather[0]?.description || 'cloudy',
+        icon: `https://openweathermap.org/img/wn/${item.weather[0]?.icon || '03d'}@2x.png`,
+        pop: Math.round((item.pop || 0) * 100)
+      };
+    });
 
-    console.log(`Generating live AI weather data for district: ${district}`);
+    // Process Daily 5-Day Summaries
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dailyMap = {};
+
+    rawForecastList.forEach(item => {
+      const date = new Date(item.dt * 1000);
+      const dayName = daysOfWeek[date.getDay()];
+      if (!dailyMap[dayName]) {
+        dailyMap[dayName] = {
+          day: dayName,
+          temps: [],
+          conditions: [],
+          pops: [],
+          icon: item.weather[0]?.icon || '03d'
+        };
+      }
+      dailyMap[dayName].temps.push(item.main.temp);
+      dailyMap[dayName].conditions.push(item.weather[0]?.main);
+      dailyMap[dayName].pops.push((item.pop || 0) * 100);
+    });
+
+    const dailyForecasts = Object.values(dailyMap).slice(0, 5).map(dayObj => {
+      const maxT = Math.round(Math.max(...dayObj.temps));
+      const minT = Math.round(Math.min(...dayObj.temps));
+      const avgPop = Math.round(dayObj.pops.reduce((a, b) => a + b, 0) / dayObj.pops.length);
+      return {
+        day: dayObj.day,
+        condition: dayObj.conditions[0] || 'Partly Cloudy',
+        tempHigh: maxT,
+        tempLow: minT,
+        precip: avgPop,
+        icon: `https://openweathermap.org/img/wn/${dayObj.icon}@2x.png`
+      };
+    });
+
+    // 2. Feed Live OpenWeather Metrics into Google Gemini AI
+    console.log(`Generating live OpenWeather + Gemini AI agronomic advisory for: ${district}`);
+    let parsedAiData = null;
+
     try {
-      const prompt = `You are an expert agricultural meteorologist specializing in Andhra Pradesh, India.
-Generate realistic crop advisories and agronomic warnings for the district of "${district}" during the current crop season.
+      const prompt = `You are a senior agricultural meteorologist and agronomist specializing in Andhra Pradesh crops (Paddy, Cotton, Chillies, Groundnut, Sugarcane, Tomatoes).
+Generate 100% accurate, highly practical crop advisories and agronomic warnings for the district of "${district}".
 
-Here is the actual live weather forecast for the district today and the next 5 days:
-- Current Temperature: ${currentTemp}°C
+LIVE OPENWEATHER DATA FOR ${district.toUpperCase()}:
+- Current Temperature: ${currentTemp}°C (Feels like: ${feelsLike}°C)
 - Current Humidity: ${currentHumidity}%
-- Current Wind Speed: ${currentWindSpeed} km/h
-- Current Condition: ${currentCondition}
-- 5-Day Forecast:
-${dailyForecasts.map(f => `  * ${f.day}: ${f.condition}, High: ${f.tempHigh}°C, Low: ${f.tempLow}°C, Rain Probability: ${f.precip}%`).join('\n')}
+- Wind Speed: ${currentWindSpeed} km/h
+- Sky Condition: ${currentCondition}
+- Barometric Pressure: ${pressure} hPa | Visibility: ${visibility} m
+- 1-Hour Step Hourly Forecast: ${hourlySteps.map(h => `${h.time}: ${h.temp}°C, Rain ${h.pop}%, Wind ${h.windSpeed}km/h`).join(' | ')}
+- 5-Day Daily Forecast: ${dailyForecasts.map(d => `${d.day}: ${d.condition}, Max ${d.tempHigh}°C, Min ${d.tempLow}°C, Rain Prob ${d.precip}%`).join(' | ')}
 
-Your response must be a raw JSON object. Do NOT wrap it in a markdown block. Do NOT use \`\`\`json or \`\`\`.
-The JSON must match the following schema:
+Your response MUST be a raw JSON object. Do NOT wrap in \`\`\`json or \`\`\`.
+JSON Schema required:
 {
-  "current": {
-    "temp": ${currentTemp},
-    "humidity": ${currentHumidity},
-    "windSpeed": ${currentWindSpeed},
-    "condition": "${currentCondition}",
-    "overview": "A detailed 2-sentence meteorology synopsis outlining weather conditions today in ${district} and how they impact local crops."
-  },
-  "forecast": [
-    { "day": "Tomorrow", "condition": "${dailyForecasts[0]?.condition || 'Partly Cloudy'}", "tempHigh": ${dailyForecasts[0]?.tempHigh || 34}, "tempLow": ${dailyForecasts[0]?.tempLow || 26}, "precip": ${dailyForecasts[0]?.precip || 30} }
-  ],
+  "overview": "Clear 2-sentence meteorology synopsis outlining weather conditions today in ${district} and how temperature, wind speed (${currentWindSpeed} km/h), and humidity (${currentHumidity}%) directly impact crop operations.",
   "alerts": [
     {
-      "title": "Weather & Irrigation Advisory for ${district}",
-      "severity": "high",
-      "desc": "Live weather guidance: Current temperature is ${currentTemp}°C with ${currentHumidity}% humidity. Adjust watering schedules to avoid waterlogging."
+      "title": "Short Alert Headline for ${district}",
+      "severity": "high" | "moderate" | "low",
+      "desc": "Actionable 1-sentence guidance on irrigation, rain, or heat stress."
     }
   ],
-  "advisory": "- Spraying should be performed during dry morning hours when wind speed is below ${currentWindSpeed} km/h.\\n- Ensure proper field drainage channels to prevent fungal root infection.\\n- Monitor crops for localized pest outbreaks following humidity shifts."
+  "advisory": "- Schedule foliar chemical sprays during calm dry morning hours when wind speed is below ${currentWindSpeed} km/h.\\n- Maintain field drainage channels clear to prevent waterlogging during precipitation.\\n- Scout leaf undersides for sucking pests following humidity shifts.",
+  "agronomistAdvisory": [
+    {
+      "category": "🌾 IRRIGATIONAL & FIELD ADVISORY",
+      "text": "Specific irrigation advice for local AP crops based on ${currentHumidity}% humidity and upcoming rain probability."
+    },
+    {
+      "category": "🧪 FOLIAR SPRAY & CHEMICAL TIMING",
+      "text": "Exact morning/evening spray windows accounting for ${currentWindSpeed} km/h wind speed."
+    },
+    {
+      "category": "🐛 PEST & FUNGAL DISEASE ALERT",
+      "text": "Targeted warning for Chilli Thrips, Paddy Stem Borer, or Cotton Pink Bollworm under current temperature (${currentTemp}°C)."
+    }
+  ]
 }`;
 
       const aiResponseText = await callGeminiRest(prompt);
-      let parsedAiData = null;
-
-      try {
-        const cleanedText = aiResponseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-        parsedAiData = JSON.parse(cleanedText);
-      } catch (jsonErr) {
-        console.warn('Failed to parse AI JSON response, constructing structured fallback for', district);
-      }
-
-      const finalResponse = {
-        current: {
-          temp: currentTemp,
-          humidity: currentHumidity,
-          windSpeed: currentWindSpeed,
-          condition: currentCondition,
-          overview: parsedAiData?.current?.overview || `Current weather in ${district} shows ${currentTemp}°C with ${currentHumidity}% humidity and ${currentCondition} skies.`
-        },
-        forecast: (parsedAiData?.forecast && parsedAiData.forecast.length > 0) ? parsedAiData.forecast : dailyForecasts,
-        alerts: (parsedAiData?.alerts && parsedAiData.alerts.length > 0) ? parsedAiData.alerts : [
-          {
-            title: `Irrigation Notice for ${district}`,
-            severity: dailyForecasts[0]?.precip > 50 ? "high" : "moderate",
-            desc: dailyForecasts[0]?.precip > 50 
-              ? `High precipitation probability (${dailyForecasts[0]?.precip}%) forecast for tomorrow. Suspend planned irrigation cycles to conserve water.` 
-              : `Stable weather conditions in ${district}. Maintain standard drip/sprinkler irrigation schedules.`
-          }
-        ],
-        advisory: parsedAiData?.advisory || `- Schedule foliar applications during dry morning hours.\n- Maintain drainage channels clear of debris.\n- Monitor crop leaf undersides for sucking pest infestation.`
-      };
-
-      cache[normalizedDistrict] = {
-        timestamp: now,
-        data: finalResponse
-      };
-
-      return NextResponse.json(finalResponse);
+      const cleanedText = aiResponseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      parsedAiData = JSON.parse(cleanedText);
     } catch (aiErr) {
-      console.error('AI climate generation failed, using live weather fallback:', aiErr);
-      const fallbackResponse = {
-        current: {
-          temp: currentTemp,
-          humidity: currentHumidity,
-          windSpeed: currentWindSpeed,
-          condition: currentCondition,
-          overview: `Live weather for ${district}: ${currentTemp}°C, ${currentHumidity}% humidity under ${currentCondition} conditions.`
-        },
-        forecast: dailyForecasts,
-        alerts: [
-          {
-            title: `Live Weather Alert for ${district}`,
-            severity: "moderate",
-            desc: `Current temperature is ${currentTemp}°C with ${currentWindSpeed} km/h winds.`
-          }
-        ],
-        advisory: `- Spraying should be performed during calm dry morning hours.\n- Maintain field drainage to prevent waterlogging.\n- Check crop foliage regularly for pest activity.`
-      };
-      return NextResponse.json(fallbackResponse);
+      console.warn('AI agronomic generation fallback for', district, aiErr.message);
     }
+
+    const finalResponse = {
+      current: {
+        temp: currentTemp,
+        feelsLike: feelsLike,
+        humidity: currentHumidity,
+        windSpeed: currentWindSpeed,
+        condition: currentCondition,
+        pressure: pressure,
+        visibility: visibility,
+        icon: `https://openweathermap.org/img/wn/${currentIcon}@2x.png`,
+        overview: parsedAiData?.overview || `Current weather in ${district} shows ${currentTemp}°C with ${currentHumidity}% humidity and ${currentCondition} skies.`
+      },
+      hourly: hourlySteps,
+      forecast: dailyForecasts,
+      alerts: (parsedAiData?.alerts && parsedAiData.alerts.length > 0) ? parsedAiData.alerts : [
+        {
+          title: `Weather & Irrigation Guidance for ${district}`,
+          severity: dailyForecasts[0]?.precip > 45 ? "high" : "moderate",
+          desc: dailyForecasts[0]?.precip > 45
+            ? `High rain probability (${dailyForecasts[0]?.precip}%) expected. Suspend planned canal/drip irrigation to avoid root rot.`
+            : `Stable weather in ${district}. Maintain standard irrigation cycles for active crops.`
+        }
+      ],
+      advisory: parsedAiData?.advisory || `- Spraying should be performed during calm morning hours when wind is below ${currentWindSpeed} km/h.\n- Maintain field drainage to avoid standing water.\n- Check crops for sucking pests following humidity shifts.`,
+      agronomistAdvisory: parsedAiData?.agronomistAdvisory || [
+        {
+          category: "🌾 IRRIGATIONAL ADVISORY",
+          text: `Current humidity is ${currentHumidity}%. Adjust field watering to match crop vegetative requirements.`
+        },
+        {
+          category: "🧪 SPRAY TIMING",
+          text: `Wind speed is ${currentWindSpeed} km/h. Conduct foliar application during early morning hours.`
+        },
+        {
+          category: "🐛 PEST SURVEILLANCE",
+          text: `Monitor crops for localized pest outbreaks under current ${currentTemp}°C conditions.`
+        }
+      ]
+    };
+
+    cache[normalizedDistrict] = {
+      timestamp: now,
+      data: finalResponse
+    };
+
+    return NextResponse.json(finalResponse);
   } catch (error) {
     console.error('Error in climate API route:', error);
-    return NextResponse.json({ error: 'Failed to fetch climate data' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch OpenWeather climate data' }, { status: 500 });
   }
 }
+

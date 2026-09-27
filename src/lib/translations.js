@@ -83,7 +83,7 @@ export const TRANSLATIONS = {
     passwordWeak: "Password must be at least 6 characters and contain a number & special character",
 
     // Climate Page
-    currentMeteorology: "Current Meteorology",
+    currentMeteorology: "Live OpenWeather",
     humidity: "Humidity",
     windSpeed: "Wind",
     dailyOutlook: "5-Day Daily Outlook",
@@ -92,7 +92,7 @@ export const TRANSLATIONS = {
     advisoryTip: "This advisory adapts in real-time as local weather forecasts adjust.",
     warningsHeader: "Agricultural Weather Warnings",
     noWarnings: "No active weather warnings at this time. Sowing parameters optimal.",
-    meteoFeed: "Meteo Feed Live"
+    meteoFeed: "OpenWeather Live"
   },
   te: {
     // Navigation
@@ -178,7 +178,7 @@ export const TRANSLATIONS = {
     passwordWeak: "పాస్‌వర్డ్ కనీసం 6 అక్షరాలు కలిగి ఉండి, ఒక సంఖ్య మరియు ప్రత్యేక గుర్తు ఉండాలి",
 
     // Climate Page
-    currentMeteorology: "ప్రస్తుత వాతావరణం",
+    currentMeteorology: "ప్రత్యక్ష వాతావరణం (OpenWeather)",
     humidity: "తేమ",
     windSpeed: "గాలి వేగం",
     dailyOutlook: "5 రోజుల వాతావరణ సూచన",
@@ -187,7 +187,7 @@ export const TRANSLATIONS = {
     advisoryTip: "స్థానిక వాతావరణ సూచనల ఆధారంగా ఈ సలహా నిజ-సమయంలో మారుతుంది.",
     warningsHeader: "వ్యవసాయ వాతావరణ హెచ్చరికలు",
     noWarnings: "ప్రస్తుతానికి ఎలాంటి వాతావరణ హెచ్చరికలు లేవు. విత్తనాలు నాటడానికి సమయం అనుకూలంగా ఉంది.",
-    meteoFeed: "నిజ-సమయ వాతావరణ ఫీడ్"
+    meteoFeed: "OpenWeather Live"
   },
   hi: {
     // Navigation
@@ -273,7 +273,7 @@ export const TRANSLATIONS = {
     passwordWeak: "पासवर्ड कम से कम 6 वर्णों का होना चाहिए और इसमें एक संख्या और विशेष वर्ण होना चाहिए",
 
     // Climate Page
-    currentMeteorology: "वर्तमान मौसम",
+    currentMeteorology: "लाइव ओपनवेदर (OpenWeather)",
     humidity: "आर्द्रता",
     windSpeed: "हवा की गति",
     dailyOutlook: "5-दिवसीय मौसम पूर्वानुमान",
@@ -282,6 +282,6 @@ export const TRANSLATIONS = {
     advisoryTip: "यह सलाह स्थानीय मौसम पूर्वानुमानों के अनुसार वास्तविक समय में बदलती है।",
     warningsHeader: "कृषि मौसम चेतावनी",
     noWarnings: "इस समय कोई मौसम चेतावनी सक्रिय नहीं है। बुवाई के पैरामीटर इष्टतम हैं।",
-    meteoFeed: "वास्तविक समय मौसम फीड"
+    meteoFeed: "OpenWeather Live"
   }
 };

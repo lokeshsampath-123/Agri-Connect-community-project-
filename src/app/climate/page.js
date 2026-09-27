@@ -107,8 +107,8 @@ export default function ClimatePage() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-tertiary animate-pulse" />
-            <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Meteo Feed Live</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">OpenWeather Live</span>
           </div>
         </header>
 
@@ -149,7 +149,7 @@ export default function ClimatePage() {
                 
                 <div className="space-y-4 text-center md:text-left relative z-10">
                   <span className="px-3 py-1 bg-white/10 text-white rounded-full text-[10px] font-black uppercase tracking-widest inline-block">
-                    Current Meteorology
+                    Live OpenWeather
                   </span>
                   <h2 className="text-4xl font-black">{district} District</h2>
                   <p className="text-sm text-white/80 max-w-xl leading-relaxed">
@@ -163,6 +163,10 @@ export default function ClimatePage() {
                     <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-2xl border border-white/5 text-xs font-semibold">
                       <span className="material-symbols-outlined text-sm">air</span>
                       <span>Wind: {weatherData.current.windSpeed} km/h</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-2xl border border-white/5 text-xs font-semibold">
+                      <span className="material-symbols-outlined text-sm">compress</span>
+                      <span>Pressure: {weatherData.current.pressure} hPa</span>
                     </div>
                   </div>
                 </div>
@@ -181,6 +185,38 @@ export default function ClimatePage() {
                 </div>
               </section>
 
+              {/* Hourly Forecast Timeline (1-Hour Step Format) */}
+              {weatherData.hourly && weatherData.hourly.length > 0 && (
+                <section className="bg-white border border-outline-variant p-6 sm:p-8 rounded-3xl shadow-sm space-y-4">
+                  <div className="flex justify-between items-center flex-wrap gap-4 border-b border-outline-variant/30 pb-4">
+                    <h3 className="font-display text-lg font-black text-primary flex items-center gap-2">
+                      <span className="material-symbols-outlined text-primary">schedule</span>
+                      Hourly Weather Forecast (1-Hour Step Format)
+                    </h3>
+                    <span className="px-2.5 py-1 bg-surface-container text-on-surface-variant text-[10px] font-bold rounded-lg uppercase tracking-wider">
+                      Today & Upcoming Hours
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+                    {weatherData.hourly.map((h, i) => (
+                      <div key={i} className="bg-surface-container-lowest border border-outline-variant/60 p-3 rounded-2xl flex flex-col items-center text-center space-y-1.5 hover:border-primary/40 transition-colors">
+                        <span className="text-[10px] font-black text-primary uppercase">{h.time}</span>
+                        <span className="material-symbols-outlined text-2xl text-primary">
+                          {getWeatherIcon(h.condition)}
+                        </span>
+                        <span className="text-xs font-black text-on-surface">{h.temp}°C</span>
+                        <span className="text-[9px] font-bold text-on-surface-variant line-clamp-1">{h.condition}</span>
+                        <div className="flex items-center gap-1 text-[9px] text-emerald-600 font-bold">
+                          <span className="material-symbols-outlined text-[10px]">umbrella</span>
+                          <span>{h.pop}%</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
               {/* Bento Grid Content */}
               <div className="grid grid-cols-12 gap-8">
                 
@@ -190,7 +226,7 @@ export default function ClimatePage() {
                     <div className="flex justify-between items-center flex-wrap gap-4 border-b border-outline-variant/30 pb-4">
                       <h3 className="font-display text-lg font-black text-primary flex items-center gap-2">
                         <span className="material-symbols-outlined text-primary">calendar_month</span>
-                        5-Day Daily Outlook
+                        5-Day Daily Outlook (OpenWeather)
                       </h3>
                       <span className="px-2.5 py-1 bg-surface-container text-on-surface-variant text-[10px] font-bold rounded-lg uppercase tracking-wider">
                         Next 5 Days
@@ -226,7 +262,7 @@ export default function ClimatePage() {
                     <div className="space-y-4 relative z-10">
                       <div className="flex items-center gap-2 text-success-bright">
                         <span className="material-symbols-outlined text-[24px]">psychology</span>
-                        <h3 className="font-display text-lg font-black">AI Agronomist advice</h3>
+                        <h3 className="font-display text-lg font-black">AI Agronomist Advice</h3>
                       </div>
                       <div className="space-y-2.5 pt-2">
                         {weatherData.advisory.split('\n').map((point, index) => {
@@ -245,13 +281,31 @@ export default function ClimatePage() {
                     <div className="pt-6 relative z-10">
                       <div className="p-4 bg-white/10 rounded-2xl border border-white/5 text-[10px] font-semibold flex items-center gap-3">
                         <span className="material-symbols-outlined text-success-bright text-lg">info</span>
-                        <span>This advisory adapts in real-time as local weather forecasts adjust.</span>
+                        <span>Directly computed from live OpenWeather telemetry + Gemini AI.</span>
                       </div>
                     </div>
                   </div>
                 </ErrorBoundary>
 
               </div>
+
+              {/* Detailed Agronomist Advisory Categories */}
+              {weatherData.agronomistAdvisory && weatherData.agronomistAdvisory.length > 0 && (
+                <section className="bg-white border border-outline-variant p-6 sm:p-8 rounded-3xl shadow-sm space-y-6">
+                  <div className="flex items-center gap-2 border-b border-outline-variant/30 pb-4">
+                    <span className="material-symbols-outlined text-primary">eco</span>
+                    <h3 className="font-display text-lg font-black text-primary">Agronomist Field Action Plan</h3>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {weatherData.agronomistAdvisory.map((item, idx) => (
+                      <div key={idx} className="bg-surface-container-lowest border border-outline-variant/60 p-5 rounded-2xl space-y-2">
+                        <h4 className="font-bold text-xs text-primary uppercase tracking-wider">{item.category}</h4>
+                        <p className="text-xs text-on-surface-variant leading-relaxed font-medium">{item.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {/* Climate Warnings / Active Alerts */}
               <section className="bg-white border border-outline-variant p-6 sm:p-8 rounded-3xl shadow-sm space-y-6">
