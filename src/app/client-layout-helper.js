@@ -444,25 +444,20 @@ export default function ClientLayoutHelper() {
             </div>
           )}
 
-          {/* Single Speaker Icon Button */}
+          {/* Single Speaker Icon Button (Icon Only) */}
           <button
             onClick={handleAudioTrigger}
-            className={`h-9 px-3 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-xs border ${
+            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-xs border ${
               isSpeaking 
                 ? 'bg-primary text-white animate-pulse shadow-md border-primary/30 ring-2 ring-primary/20' 
-                : 'bg-primary/10 hover:bg-primary/20 text-primary border-primary/20 hover:scale-105'
+                : 'bg-emerald-50 hover:bg-emerald-100 text-primary border-emerald-200/60 hover:scale-105'
             }`}
             title={isSpeaking ? "Pause / Stop Audio" : "Read Selected Text Aloud"}
             aria-label="Read Aloud Speaker"
           >
-            <span className="material-symbols-outlined text-[19px] font-bold">
+            <span className="material-symbols-outlined text-[20px] font-bold">
               {isSpeaking ? 'pause' : 'volume_up'}
             </span>
-            {isSpeaking && (
-              <span className="text-[11px] font-bold tracking-wide">
-                {localStorage.getItem('agri_lang') === 'te' ? "ఆపు" : localStorage.getItem('agri_lang') === 'hi' ? "रोकें" : "Stop"}
-              </span>
-            )}
           </button>
         </div>,
         headerPortalNode
