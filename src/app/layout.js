@@ -5,15 +5,13 @@ import ClientLayoutHelper from './client-layout-helper';
 const hankenGrotesk = Hanken_Grotesk({
   variable: '--font-hanken-grotesk',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
   display: 'swap',
 });
 
 const instrumentSerif = Instrument_Serif({
   variable: '--font-instrument-serif',
   subsets: ['latin'],
-  weight: ['400'],
-  style: ['normal', 'italic'],
+  weight: '400',
   display: 'swap',
 });
 

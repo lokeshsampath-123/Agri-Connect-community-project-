@@ -13,6 +13,7 @@ export default function ClientLayoutHelper() {
 
   // Accessibility Speech Synthesis Controller State
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [ttsMode, setTtsMode] = useState('readaloud'); // 'select' or 'readaloud'
   const [showTooltip, setShowTooltip] = useState(false);
   const [headerPortalNode, setHeaderPortalNode] = useState(null);
   const [activeAudioNodes, setActiveAudioNodes] = useState([]);
@@ -82,17 +83,8 @@ export default function ClientLayoutHelper() {
   };
 
   // Helper to play raw text chunks via Google TTS / Web Speech API
-  const playTextChunks = (rawTextToRead, langOverride) => {
+  const playTextChunks = (textToRead, langOverride) => {
     stopSpeaking();
-    if (!rawTextToRead) return;
-
-    // Clean text for voice synthesis so emojis and markdown symbols are NOT spoken aloud!
-    const textToRead = rawTextToRead
-      .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2300}-\u{23FF}]/gu, '')
-      .replace(/[*_#`~[\]()]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
-
     if (!textToRead) return;
 
     let langCode = langOverride || localStorage.getItem('agri_lang') || 'en';
@@ -270,13 +262,10 @@ export default function ClientLayoutHelper() {
     if (isSpeaking) {
       stopSpeaking();
     } else {
-      if (typeof window !== 'undefined') {
-        const selectedText = window.getSelection() ? window.getSelection().toString().trim() : '';
-        if (selectedText) {
-          playTextChunks(selectedText);
-        } else {
-          readFullPageAloud();
-        }
+      if (ttsMode === 'readaloud') {
+        readFullPageAloud();
+      } else {
+        speakSelection();
       }
     }
   };
@@ -431,7 +420,7 @@ export default function ClientLayoutHelper() {
     <>
       {/* Header-injected Accessibility Speech Assistant via React Portal */}
       {headerPortalNode && createPortal(
-        <div className="relative flex items-center gap-2 mr-2 notranslate" translate="no">
+        <div className="relative flex items-center gap-2 mr-2 bg-surface-container/60 border border-outline-variant/50 p-1.5 rounded-2xl shadow-xs">
           {/* Tooltip Warning Balloon */}
           {showTooltip && (
             <div className="absolute right-0 top-12 bg-primary text-white text-[11px] font-black px-4 py-2 rounded-xl shadow-lg border border-primary-container/20 w-60 z-50 text-center animate-bounce">
@@ -444,26 +433,53 @@ export default function ClientLayoutHelper() {
             </div>
           )}
 
-          {/* Single Speaker Icon Button */}
+          {/* Mode Switcher Toggle Pill */}
+          <div className="flex items-center bg-white/70 rounded-xl p-0.5 border border-outline-variant/30 text-[10px] font-black">
+            <button
+              onClick={() => { setTtsMode('readaloud'); stopSpeaking(); }}
+              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                ttsMode === 'readaloud' ? 'bg-primary text-white shadow-xs' : 'text-on-surface-variant hover:text-primary'
+              }`}
+              title="Read Entire Page Aloud (Excludes Sidebar)"
+            >
+              📢 Read Aloud
+            </button>
+            <button
+              onClick={() => { setTtsMode('select'); stopSpeaking(); }}
+              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                ttsMode === 'select' ? 'bg-primary text-white shadow-xs' : 'text-on-surface-variant hover:text-primary'
+              }`}
+              title="Read Selected Highlighted Text"
+            >
+              🤏 Select Text
+            </button>
+          </div>
+
+          {/* Play / Speaker Button */}
           <button
             onClick={handleAudioTrigger}
-            className={`h-9 px-3 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-xs border ${
+            className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all cursor-pointer ${
               isSpeaking 
-                ? 'bg-primary text-white animate-pulse shadow-md border-primary/30 ring-2 ring-primary/20' 
-                : 'bg-primary/10 hover:bg-primary/20 text-primary border-primary/20 hover:scale-105'
+                ? 'bg-primary text-white animate-pulse shadow-md border border-primary/20' 
+                : 'hover:bg-primary/10 text-primary bg-primary/5 hover:scale-105 border border-primary/20'
             }`}
-            title={isSpeaking ? "Pause / Stop Audio" : "Read Selected Text Aloud"}
-            aria-label="Read Aloud Speaker"
+            title={isSpeaking ? "Pause / Stop Audio" : ttsMode === 'readaloud' ? "Read Full Page Content" : "Read Selection"}
           >
-            <span className="material-symbols-outlined text-[19px] font-bold">
+            <span className="material-symbols-outlined text-[17px] font-bold">
               {isSpeaking ? 'pause' : 'volume_up'}
             </span>
-            {isSpeaking && (
-              <span className="text-[11px] font-bold tracking-wide">
-                {localStorage.getItem('agri_lang') === 'te' ? "ఆపు" : localStorage.getItem('agri_lang') === 'hi' ? "रोकें" : "Stop"}
-              </span>
-            )}
           </button>
+
+          {/* Stop Button (When speaking) */}
+          {isSpeaking && (
+            <button
+              onClick={stopSpeaking}
+              className="w-8 h-8 rounded-xl bg-error/10 hover:bg-error text-error hover:text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 animate-fade-in border border-error/20"
+              title="Stop Speech"
+            >
+              <span className="material-symbols-outlined text-[17px] font-bold">stop</span>
+            </button>
+          )}
         </div>,
         headerPortalNode
       )}
