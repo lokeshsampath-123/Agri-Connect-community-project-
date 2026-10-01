@@ -275,7 +275,16 @@ export default function ClientLayoutHelper() {
         if (selectedText) {
           playTextChunks(selectedText);
         } else {
-          readFullPageAloud();
+          const activeLang = localStorage.getItem('agri_lang') || 'en';
+          const PROMPT_MESSAGES = {
+            en: "Please highlight or select the text you want me to read.",
+            te: "దయచేసి బిగ్గరగా చదవడానికి స్క్రీన్‌పై ఉన్న వచనాన్ని సెలెక్ట్ చేయండి.",
+            hi: "कृपया ज़ोर से पढ़ने के लिए स्क्रीन पर पाठ चुनें।"
+          };
+          const promptText = PROMPT_MESSAGES[activeLang] || PROMPT_MESSAGES['en'];
+          setShowTooltip(true);
+          setTimeout(() => setShowTooltip(false), 4000);
+          playTextChunks(promptText, activeLang);
         }
       }
     }

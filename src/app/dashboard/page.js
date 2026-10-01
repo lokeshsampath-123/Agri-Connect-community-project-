@@ -313,7 +313,7 @@ export default function Dashboard() {
             >
               <span className="material-symbols-outlined text-[20px]">menu</span>
             </button>
-            <span className="font-headline text-lg font-bold text-primary">{t.dashboard || 'Farmer Dashboard'}</span>
+            <span className="font-headline text-lg font-bold text-primary">{t.dashboard || 'Dashboard'}</span>
             <div className="h-6 w-[1px] bg-outline-variant" />
             <div className="flex items-center text-on-surface-variant gap-2 text-sm font-semibold">
               <span className="material-symbols-outlined text-primary text-lg">location_on</span>
@@ -330,7 +330,7 @@ export default function Dashboard() {
               {profile.profileImage ? (
                 <img 
                   src={profile.profileImage} 
-                  alt="Farmer Profile" 
+                  alt="Profile" 
                   className="w-16 h-16 rounded-2xl object-cover border-2 border-primary shadow-md shrink-0 animate-float"
                 />
               ) : (
@@ -340,7 +340,7 @@ export default function Dashboard() {
               )}
               <div>
                 <h2 className="font-display text-2xl sm:text-4xl font-black text-primary tracking-tight">
-                  {t.welcome || 'Welcome'}, Farmer {profile.name}!
+                  {t.welcome || 'Welcome'}, {profile.name}!
                 </h2>
                 <p className="text-xs sm:text-sm text-on-surface-variant mt-1 font-semibold">
                   {t.liveAnalytics || 'Here is the real-time crop analytics overview for your farm.'} ({(convertArea(totalAcreage)).toFixed(1)} {getAreaLabel()})
