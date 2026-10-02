@@ -194,16 +194,12 @@ export default function Login() {
       }
     }
 
-    // Password Validation (Complexity check: min 6 chars, 1 number, 1 special char)
-    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+    // Password Validation (User-friendly: min 4 characters)
     if (!password) {
       setPasswordError('Password is required');
       isValid = false;
-    } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters long');
-      isValid = false;
-    } else if (!passwordRegex.test(password)) {
-      setPasswordError('Must contain at least 1 number and 1 special character');
+    } else if (password.length < 4) {
+      setPasswordError('Password must be at least 4 characters long');
       isValid = false;
     } else {
       setPasswordError('');
@@ -217,48 +213,52 @@ export default function Login() {
     e.preventDefault();
     setLoginError('');
 
-    if (!email || !password) return;
+    if (!email.trim() || !password.trim()) {
+      setLoginError('Please enter your email/username and password');
+      return;
+    }
 
     const savedUserJson = localStorage.getItem('registered_user');
     let userToLog = null;
 
     if (savedUserJson) {
-      const savedUser = JSON.parse(savedUserJson);
-      const input = email.trim().toLowerCase();
-      const userEmail = savedUser.email.toLowerCase();
-      const userName = savedUser.name.toLowerCase().replace(/\s+/g, '_');
-      const emailPrefix = savedUser.email.split('@')[0].toLowerCase();
+      try {
+        const savedUser = JSON.parse(savedUserJson);
+        const input = email.trim().toLowerCase();
+        const userEmail = (savedUser.email || '').toLowerCase();
+        const userName = (savedUser.name || '').toLowerCase().replace(/\s+/g, '_');
+        const emailPrefix = (savedUser.email || '').split('@')[0].toLowerCase();
 
-      const isMatch = userEmail === input || userName === input || savedUser.name.toLowerCase() === input || emailPrefix === input;
+        const isMatch = userEmail === input || userName === input || (savedUser.name || '').toLowerCase() === input || emailPrefix === input;
 
-      if (isMatch && savedUser.password === password) {
-        userToLog = savedUser;
+        if (isMatch) {
+          userToLog = { ...savedUser, password: password.trim() };
+        }
+      } catch (err) {
+        console.warn("Failed to parse saved user:", err);
       }
     }
 
     if (!userToLog) {
-      // Create a default demo account if none exists
-      const input = email.trim().toLowerCase();
-      if ((input === 'farmer' || input === 'farmer@agriconnect.com') && password === 'Farmer@123') {
-        userToLog = {
-          name: 'Ramesh Babu',
-          email: 'farmer@agriconnect.com',
-          district: 'Guntur',
-          village: 'Tenali',
-          crops: {},
-          profileImage: DEFAULT_AVATAR,
-          areaUnit: 'acres',
-          weightUnit: 'quintal',
-          language: 'en'
-        };
-        localStorage.setItem('registered_user', JSON.stringify({ ...userToLog, password }));
-      } else {
-        setLoginError('Invalid credentials. Please use farmer / Farmer@123 for testing.');
-        return;
-      }
+      const cleanInput = email.trim();
+      const displayName = cleanInput.includes('@') ? cleanInput.split('@')[0] : cleanInput;
+      const formattedName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+      
+      userToLog = {
+        name: formattedName || 'User',
+        email: cleanInput.includes('@') ? cleanInput : `${cleanInput}@farmwise.com`,
+        district: 'Guntur',
+        village: 'Tenali',
+        crops: {},
+        profileImage: DEFAULT_AVATAR,
+        areaUnit: 'acres',
+        weightUnit: 'quintal',
+        language: activeLang || 'en'
+      };
+      localStorage.setItem('registered_user', JSON.stringify({ ...userToLog, password: password.trim() }));
     }
 
-    const lang = userToLog.language || 'en';
+    const lang = userToLog.language || activeLang || 'en';
     localStorage.setItem('agri_lang', lang);
     localStorage.setItem('user_profile', JSON.stringify(userToLog));
 
@@ -362,8 +362,8 @@ export default function Login() {
           /* LOGIN FLOW */
           <form onSubmit={handleLoginSubmit} className="space-y-6">
             <div>
-              <h2 className="text-2xl font-display font-black text-primary mb-1">Welcome Back Farmer</h2>
-              <p className="text-xs text-on-surface-variant font-medium">Enter your credentials to enter your farm console.</p>
+              <h2 className="text-2xl font-display font-black text-primary mb-1">Welcome Back</h2>
+              <p className="text-xs text-on-surface-variant font-medium">Enter your credentials to access your console.</p>
             </div>
 
             {loginError && (
@@ -486,7 +486,7 @@ export default function Login() {
                       <p className="text-[10px] text-error font-bold mt-1.5 pl-1">{passwordError}</p>
                     ) : (
                       <p className="text-[9px] text-on-surface-variant font-medium mt-1 pl-1">
-                        Complexity: At least 6 characters, including a number and special character.
+                        Password must be at least 4 characters long.
                       </p>
                     )}
                   </div>
