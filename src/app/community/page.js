@@ -61,6 +61,30 @@ export default function Community() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
 
+  // Selected Post Detail Modal State
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [newComment, setNewComment] = useState('');
+  const [postComments, setPostComments] = useState({});
+
+  const handleCommentSubmit = (e) => {
+    e.preventDefault();
+    if (!newComment.trim() || !selectedPost) return;
+
+    const postId = selectedPost.id;
+    const newReply = {
+      author: userProfile?.name || 'Farmer',
+      text: newComment.trim(),
+      time: 'Just now'
+    };
+
+    setPostComments(prev => ({
+      ...prev,
+      [postId]: [...(prev[postId] || []), newReply]
+    }));
+
+    setNewComment('');
+  };
+
   // Check login session & Load posts
   const loadPosts = async () => {
     try {
@@ -262,43 +286,56 @@ export default function Community() {
                   filteredPosts.map((post) => (
                     <article 
                       key={post.id}
-                      className="glass-card rounded-[2.5rem] p-6 md:p-8 border border-outline-variant/60 hover:border-primary/20 hover:shadow-lg transition-all space-y-4"
+                      onClick={() => setSelectedPost(post)}
+                      className="glass-card rounded-[2.5rem] p-6 md:p-8 border border-outline-variant/60 hover:border-primary/40 hover:shadow-xl transition-all space-y-4 cursor-pointer group relative overflow-hidden"
                     >
                       {/* Post Meta */}
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
-                            {post.author[0]}
+                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm border border-primary/20">
+                            {post.author ? post.author[0].toUpperCase() : 'F'}
                           </div>
                           <div>
-                            <h5 className="font-headline font-bold text-primary text-sm leading-tight">{post.author}</h5>
+                            <h5 className="font-headline font-bold text-primary text-sm leading-tight group-hover:text-primary-container transition-colors">{post.author}</h5>
                             <p className="text-[10px] text-on-surface-variant font-bold mt-0.5">
                               {post.district} District • {new Date(post.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                             </p>
                           </div>
                         </div>
                         
-                        <span className="px-3 py-1 bg-surface-container text-secondary border border-outline-variant/40 text-[9px] font-bold uppercase tracking-wider rounded-full">
-                          {post.crop_category}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="px-3 py-1 bg-surface-container text-secondary border border-outline-variant/40 text-[9px] font-bold uppercase tracking-wider rounded-full">
+                            {post.crop_category}
+                          </span>
+                          <span className="hidden sm:flex items-center gap-1 text-[10px] font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full border border-primary/20">
+                            <span className="material-symbols-outlined text-[14px]">visibility</span>
+                            View
+                          </span>
+                        </div>
                       </div>
 
                       {/* Post Content */}
                       <div className="space-y-3">
-                        <h4 className="font-display font-black text-primary text-lg leading-snug">{post.title}</h4>
-                        <p className="text-xs text-on-surface-variant leading-relaxed font-semibold">
+                        <h4 className="font-display font-black text-primary text-lg leading-snug group-hover:text-primary-container transition-colors">{post.title}</h4>
+                        <p className="text-xs text-on-surface-variant leading-relaxed font-semibold line-clamp-3">
                           {post.content}
                         </p>
                       </div>
 
                       {/* Optional Attached Image */}
                       {post.image_url && (
-                        <div className="w-full max-h-80 rounded-2xl overflow-hidden border border-outline-variant/40">
+                        <div className="w-full h-52 sm:h-64 rounded-2xl overflow-hidden border border-outline-variant/40 relative group-hover:border-primary/30 transition-colors">
                           <FallbackImage 
                             src={post.image_url} 
                             alt="Discussion attachment" 
-                            className="w-full h-full object-cover" 
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                           />
+                          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span className="bg-white/90 text-primary text-xs font-bold px-3 py-1.5 rounded-xl shadow-md flex items-center gap-1">
+                              <span className="material-symbols-outlined text-sm">zoom_in</span>
+                              Click to View Full Image & Details
+                            </span>
+                          </div>
                         </div>
                       )}
                     </article>
@@ -445,6 +482,143 @@ export default function Community() {
           </div>
         </div>
       )}
+
+      {/* Detailed Post Modal Dialog */}
+      {selectedPost && (() => {
+        const commentList = postComments[selectedPost.id] || [];
+        
+        return (
+          <div 
+            className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fade-in"
+            onClick={() => setSelectedPost(null)}
+          >
+            <div 
+              className="bg-white rounded-[2.5rem] border border-outline-variant max-w-3xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[92vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="p-6 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-base shadow-xs border border-primary/20">
+                    {selectedPost.author ? selectedPost.author[0].toUpperCase() : 'F'}
+                  </div>
+                  <div>
+                    <h4 className="font-headline font-bold text-primary text-base leading-tight">{selectedPost.author}</h4>
+                    <p className="text-xs text-on-surface-variant font-semibold mt-0.5">
+                      📍 {selectedPost.district} District • {new Date(selectedPost.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="px-3 py-1 bg-primary/10 text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider rounded-full">
+                    {selectedPost.crop_category}
+                  </span>
+                  <button 
+                    onClick={() => setSelectedPost(null)}
+                    className="w-10 h-10 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-full flex items-center justify-center shadow-xs transition-all cursor-pointer"
+                    title="Close Modal"
+                  >
+                    <span className="material-symbols-outlined text-xl">close</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Scrollable Modal Content */}
+              <div className="p-6 md:p-8 space-y-6 overflow-y-auto custom-scrollbar">
+                {/* Title */}
+                <h3 className="font-display font-black text-primary text-2xl leading-snug">
+                  {selectedPost.title}
+                </h3>
+
+                {/* Clear High-Res Image View */}
+                {selectedPost.image_url && (
+                  <div className="w-full max-h-[460px] bg-slate-900/5 rounded-2xl overflow-hidden border border-outline-variant/50 relative flex items-center justify-center p-2 group">
+                    <FallbackImage 
+                      src={selectedPost.image_url} 
+                      alt={selectedPost.title} 
+                      className="max-h-[440px] w-full object-contain rounded-xl shadow-xs" 
+                    />
+                    <a 
+                      href={selectedPost.image_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="absolute bottom-4 right-4 bg-black/75 hover:bg-black text-white text-xs font-bold px-3.5 py-2 rounded-xl backdrop-blur-md transition-all flex items-center gap-1.5 shadow-lg"
+                    >
+                      <span className="material-symbols-outlined text-base">open_in_new</span>
+                      Open High-Res Image
+                    </a>
+                  </div>
+                )}
+
+                {/* Message Body */}
+                <div className="bg-surface-container-low p-5 rounded-2xl border border-outline-variant/40">
+                  <h5 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Discussion Details</h5>
+                  <p className="text-sm text-slate-800 leading-relaxed font-semibold whitespace-pre-line">
+                    {selectedPost.content}
+                  </p>
+                </div>
+
+                {/* Replies & Discussion Thread */}
+                <div className="space-y-4 border-t border-outline-variant/30 pt-6">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-headline font-bold text-primary text-base flex items-center gap-2">
+                      <span className="material-symbols-outlined text-primary text-lg">chat_bubble</span>
+                      Farmer Discussions & Replies
+                    </h4>
+                    <span className="text-xs font-bold text-on-surface-variant bg-surface-container px-3 py-1 rounded-full border border-outline-variant/30">
+                      {commentList.length} Replies
+                    </span>
+                  </div>
+
+                  {/* Add Reply */}
+                  {isLoggedIn ? (
+                    <form onSubmit={handleCommentSubmit} className="flex gap-2">
+                      <input 
+                        type="text"
+                        className="flex-1 bg-white border border-outline-variant rounded-xl py-2.5 px-4 text-xs font-semibold focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all"
+                        placeholder="Share your agronomic advice or reply..."
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                      />
+                      <button 
+                        type="submit"
+                        className="px-4 py-2.5 bg-primary text-white text-xs font-bold rounded-xl hover:shadow-md transition-all shrink-0 cursor-pointer flex items-center gap-1"
+                      >
+                        <span className="material-symbols-outlined text-sm">send</span>
+                        Reply
+                      </button>
+                    </form>
+                  ) : (
+                    <div className="p-3 bg-primary/5 rounded-xl text-center text-xs font-semibold text-on-surface-variant border border-primary/10">
+                      Sign in to reply to this farmer discussion.
+                    </div>
+                  )}
+
+                  {/* Replies List */}
+                  <div className="space-y-3 pt-2">
+                    {commentList.length === 0 ? (
+                      <p className="text-xs text-on-surface-variant/70 italic text-center py-4">
+                        No replies yet on this thread. Be the first to answer!
+                      </p>
+                    ) : (
+                      commentList.map((c, idx) => (
+                        <div key={idx} className="p-3.5 bg-surface-container-low rounded-2xl border border-outline-variant/30 space-y-1">
+                          <div className="flex justify-between items-center">
+                            <span className="font-bold text-xs text-primary">{c.author}</span>
+                            <span className="text-[10px] text-on-surface-variant font-semibold">{c.time}</span>
+                          </div>
+                          <p className="text-xs text-slate-700 font-medium leading-relaxed">{c.text}</p>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
